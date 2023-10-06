@@ -6,7 +6,7 @@
 	<title>MLMF</title>
 
     
-    <!-- <link href="{{url('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="{{url('assets/vendor1/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css"> -->
     <link href="{{url('assets/font-awesome/css/font-awesome.css')}}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -18,7 +18,7 @@
     <link href="{{url('assets/css/jquery-ui.min.css')}}" rel="stylesheet">
    
 
-    <link href="{{url('assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="{{url('assets/vendor1/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 
     <link href="{{url('assets/css/selectize.css')}}" rel="stylesheet" type="text/css"/>
 
@@ -60,18 +60,18 @@
         var CSRF_TOKEN = "{{ csrf_token() }}";
     </script>
     <!-- Bootstrap core JavaScript-->
-    <script src="{{url('assets/vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{url('assets/vendor1/jquery/jquery.min.js')}}"></script>
     <script src="{{url('assets/js/jquery-ui.min.js')}}"></script>
-    <script src="{{url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url('assets/vendor1/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="{{url('assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+    <script src="{{url('assets/vendor1/jquery-easing/jquery.easing.min.js')}}"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="{{url('assets/js/sb-admin-2.min.js')}}"></script>
 
-    <script src="{{url('assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{url('assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{url('assets/vendor1/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{url('assets/vendor1/datatables/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{url('assets/js/demo/datatables-demo.js')}}"></script>
 
     <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
