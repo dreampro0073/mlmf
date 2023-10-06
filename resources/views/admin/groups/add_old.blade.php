@@ -1,0 +1,95 @@
+@extends('admin.layout')
+
+@section('header_scripts')
+  
+@endsection
+
+@section('main')
+<div class="main" ng-controller="groupsCtrl" ng-init="group_id={{$group_id}};addGroupInit()">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1 class="h3 mb-2 text-gray-800">
+                <span ng-if="group_id == 0">Add</span>
+                <span ng-if="group_id != 0">Edit</span> Groups
+            </h1>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="{{url('admin/groups')}}" class="btn btn-info">Back</a>
+        </div>
+    </div>    
+    <div class="card shadow mb-4">
+      
+        <div class="card-body">
+            <form name="group" novalidate="novalidate" ng-submit="storeGroup(group.$valid)">
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label>Group Name</label>
+                        <input type="text" ng-model="formData.group_name" class="form-control" required />
+                    </div>
+
+                    <div class="form-group col-4" >
+                        <label>Plan</label>
+                        <selectize placeholder='Select Plan' ng-change="onChangePlan()" config="selectConfigPlans" options="plans" ng-model="formData.plan_id" required></selectize>
+                    </div> 
+
+
+                    <div class="col-md-4 form-group">
+                        <label>Start Date</label>
+                        <input type="text" ng-model="formData.start_date" class="form-control datepicker4" required />
+                    </div>
+
+
+                    <div class="col-md-4 form-group">
+                        <label>Block</label>
+                        <select ng-model="formData.block_id" ng-change="getVillages()" class="form-control" required="" convert-to-number>
+                            <option value="">--select--</option>
+                            <option ng-repeat="item in blocks" value=@{{item.id}}>@{{ item.block_name}}</option>
+                        </select>
+                    </div> 
+
+                    <div class="form-group col-4" >
+                        <label>Village</label>
+                        <selectize placeholder='Select Villages' config="selectConfigVillage" options="villages" ng-model="formData.village_id" required></selectize>
+                    </div>
+
+                    <div class="form-group col-4" >
+                        <label>PIN Code</label>
+                        <input type="text" minlength="6" maxlength="6" ng-model="formData.pin_code" class="form-control" required />
+                    </div>
+
+                    <div class="form-group col-4" >
+                        <label>Customers</label>
+                        
+                        <input type="text" class="form-control" searchtype="customers" auto-complete  required />
+                    </div>
+                    <div class="col-md-12">
+                        <div style="margin: 20px 0">
+                            <div class="at-tag" ng-repeat="customer in formData.customers track by $index" ng-click="editCustomer(customer.id);">
+                                <span>
+                                    @{{ customer.name }}
+                                </span>
+                                <button class="btn btn-sm btn-danger" type="button" ng-click="removeCustomer($index)">X</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="btn btn-primary" ng-disabled="loading">
+                        <span ng-if="!loading">Submit</span>
+                        <span ng-if="loading" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    </button> 
+                </div>     
+            </form>
+        </div>
+    </div> 
+</div>
+@endsection
+
+@section('footer_scripts')
+    <?php $version = "0.0.1"; ?>
+        
+    <script type="text/javascript" src="{{url('assets/scripts/core/groups_ctrl.js?v='.$version)}}" ></script>
+
+    
+@endsection
