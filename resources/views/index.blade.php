@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>SB Admin 2 - Login</title>
-    <link href="{{url('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{url('assets/vendor1/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -34,8 +34,8 @@
             </div>
         </div>
     </header>
-    <script src="{{url('assets/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url('assets/vendor1/jquery/jquery.min.js')}}"></script>
+    <script src="{{url('assets/vendor1/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
 </body>
 </html>
