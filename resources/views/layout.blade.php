@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Test</title>
+    <title>MLMF</title>
 
     <title>SB Admin 2 - Login</title>
 
