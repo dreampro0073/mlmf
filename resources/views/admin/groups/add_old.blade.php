@@ -22,20 +22,53 @@
         <div class="card-body">
             <form name="group" novalidate="novalidate" ng-submit="storeGroup(group.$valid)">
                 <div class="row">
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-3 form-group">
                         <label>Group Name</label>
                         <input type="text" ng-model="formData.group_name" class="form-control" required />
                     </div>
 
-                    <div class="form-group col-4" >
+                    <div class="form-group col-3" >
                         <label>Plan</label>
                         <selectize placeholder='Select Plan' ng-change="onChangePlan()" config="selectConfigPlans" options="plans" ng-model="formData.plan_id" required></selectize>
                     </div> 
-
-
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-4 form-group" ng-if="emi_type != 0">
                         <label>Start Date</label>
-                        <input type="text" ng-model="formData.start_date" class="form-control datepicker4" required />
+                        <select ng-model="formData.day" class="form-control" required ng-if="emi_type == 4">
+                            <option value="">Day</option>
+                            <?php for ($i=1; $i <=13 ; $i++) { 
+                               ?>
+                                <option ng-value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php } ?> 
+
+                        </select>
+                        <select ng-model="formData.day" class="form-control" required ng-if="emi_type != 4">
+                            <option value="">Day</option>
+                            <?php for ($i=1; $i <=28 ; $i++) { 
+                               ?>
+                                <option ng-value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-2 form-group">
+                        <label>Start Month</label>
+                        <select ng-model="formData.month" class="form-control" required>
+                            <option value="">Month</option>
+                            <?php for ($i=1; $i <=12 ; $i++) { 
+                               ?>
+                                <option ng-value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label>Start Year</label>
+                        <select ng-model="formData.year" class="form-control" required>
+                            <option value="">Year</option>
+                            <?php for ($i=2019; $i <=2023 ; $i++) { 
+                               ?>
+                                <option ng-value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
 
 
@@ -55,6 +88,14 @@
                     <div class="form-group col-4" >
                         <label>PIN Code</label>
                         <input type="text" minlength="6" maxlength="6" ng-model="formData.pin_code" class="form-control" required />
+                    </div>
+                    <div class="form-group col-4" >
+                        <label>Processing Fees</label>
+                        <input type="text" ng-model="formData.processing_fee" class="form-control" />
+                    </div>
+                    <div class="form-group col-4" >
+                        <label>Insurance Fees</label>
+                        <input type="text" ng-model="formData.insurance_fee" class="form-control" />
                     </div>
 
                     <div class="form-group col-4" >
@@ -87,9 +128,9 @@
 @endsection
 
 @section('footer_scripts')
-    <?php $version = "0.0.1"; ?>
+    <?php $version = "0.0.3"; ?>
         
-    <script type="text/javascript" src="{{url('assets/scripts/core/groups_ctrl.js?v='.$version)}}" ></script>
+    <script type="text/javascript" src="{{url('assets/scripts/core/groups_old_ctrl.js?v='.$version)}}" ></script>
 
     
 @endsection

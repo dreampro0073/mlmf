@@ -161,35 +161,6 @@ class GroupsController extends Controller {
 		if($group){
 			$group_dates = DB::table('group_emi_dates')->where('group_id',$group->id)->get();
 
-			// $group_customers  = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','group_customers.customer_id')->leftjoin('customers','group_customers.customer_id','=','customers.id')->where('group_customers.group_id',$group->id)->get();
-
-			// $group->group_dates = $group_dates;
-			// // $group->group_customers = $group_customers;
-
-			// $show_customers = [];
-
-			// if(sizeof($group_customers) > 0){
-			// 	foreach ($group_customers as $key => $group_customer) {
-			// 		if(sizeof($group_dates) > 0){
-			// 			foreach ($group_dates as $key => $group_date) {
-
-			// 				$check_entry = DB::table('emi_collection')->where('group_id',$group_id)->where("customer_id",$group_customer->customer_id)->where('group_emi_date_id',$group_date->id)->first();
-
-			// 				$entry_data = [
-			// 					'group_id' => $group_id,
-			// 					'customer_id' => $group_customer->customer_id,
-			// 					'group_emi_date_id' => $group_date->id,
-			// 				];
-
-			// 				if(!$check_entry){
-			// 					DB::table("emi_collection")->insert($entry_data);
-			// 				}
-			// 			}
-			// 		}
-			// 	}
-			// }
-
-
 			foreach ($group_dates as $group_date) {
 				$g_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','group_customers.customer_id')->leftjoin('customers','group_customers.customer_id','=','customers.id')->where('group_customers.group_id',$group->id)->get(); 
 
@@ -365,7 +336,9 @@ class GroupsController extends Controller {
 		            }  
 					$dates[] = $s_date1;
 				}
-	       	}else{
+	       	}
+
+	       	if($plan->emi_type == 4){
 
 	       		$start_date = date("Y-m-d",strtotime($plan->start_date));
 	        	$second_date = date("Y-m-d",strtotime("+15 days".$start_date));
@@ -415,6 +388,26 @@ class GroupsController extends Controller {
 		            	$i++;
 
 		            }
+		        }	       		       		
+	       	}
+	       	
+	       	if($plan->emi_type == 3){
+
+	       		$s_date = date("Y-m-d",strtotime($plan->start_date));
+
+		        $active_date = date("Y-m-d",strtotime($plan->updated_at));
+
+	       		for ($i=0; $i < $plan->no_of_emis; $i) { 
+
+		            $s_date = date('Y-m-d',strtotime($s_date));
+
+		            if(strtotime($s_date) - strtotime($active_date) >= '648000' && $i < $plan->no_of_emis ){
+		            	$dates[] = $s_date;
+
+		            	$i++;
+		            }	
+
+		            $s_date = date("Y-m-d",strtotime("+7 days".$s_date));
 		        }	       		       		
 	       	}
 

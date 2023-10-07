@@ -14,6 +14,7 @@
         </div>
         <div class="col-md-6 text-right">
             <a href="{{url('admin/groups/add')}}" class="btn btn-primary">Add</a>
+            <a href="{{url('old-groups/add')}}" class="btn btn-primary">Add Old Group</a>
         </div>
     </div>    
     <div class="card shadow mb-4"> 

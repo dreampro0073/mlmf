@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\GroupsController;
+use App\Http\Controllers\GroupsOldController;
 
 
 /*
@@ -106,4 +107,10 @@ Route::group(['prefix'=>"api"], function(){
 
 		Route::post('/select-plan',[GroupsController::class,'getPlanType']);
 	});
+});
+
+Route::group(['prefix'=>"old-groups"], function(){
+	Route::get('/add/{group_id?}',[GroupsOldController::class,'addGroup']);
+	Route::post('/store',[GroupsOldController::class,'groupStore']);
+	Route::post('/activate-group',[GroupsOldController::class,'actvateGroup']);
 });
