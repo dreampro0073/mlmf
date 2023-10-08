@@ -40,6 +40,11 @@
                                 <option ng-value="<?php echo $i; ?>"><?php echo $i; ?></option>
                             <?php } ?> 
 
+                            <?php for ($i=16; $i <=28 ; $i++) { 
+                               ?>
+                                <option ng-value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php } ?> 
+
                         </select>
                         <select ng-model="formData.day" class="form-control" required ng-if="emi_type != 4">
                             <option value="">Day</option>
