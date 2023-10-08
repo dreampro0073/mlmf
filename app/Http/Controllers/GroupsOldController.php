@@ -162,10 +162,17 @@ class GroupsOldController extends Controller {
 		            }  
 					$dates[] = $s_date1;
 				}
-	       	}else{
+	       	}
+
+
+	       	if($plan->emi_type == 4){
 
 	       		$start_date = date("Y-m-d",strtotime($plan->start_date));
+
+	       		$fixed_day = date("d",strtotime($start_date));
 	        	$second_date = date("Y-m-d",strtotime("+15 days".$start_date));
+
+
 
 		        $f1_day =  date("d",strtotime($start_date));
 		        $f2_day =  date("d",strtotime($second_date));
@@ -175,6 +182,25 @@ class GroupsOldController extends Controller {
 
 		        $y1_year = date("Y",strtotime($start_date));
 		        $y2_year = date("Y",strtotime($second_date));
+
+	       		if($fixed_day >= 16){
+
+	       			$second_date = date("Y-m-d",strtotime("-15 days".$start_date));
+	       			$f2_day =  date("d",strtotime($second_date));
+		            $f2_mon =  date("m",strtotime($second_date));
+		            $y2_year = date("Y",strtotime($second_date));
+	       			
+	       			if($f2_mon == 12){
+		                $f2_mon = "01";
+		                $y2_year++;
+
+		            }else{
+		                $f2_mon= date("m",strtotime("+1 month".$second_date));
+		            }
+
+		            $second_date = date('Y-m-d',strtotime($y2_year.'-'.$f2_mon.'-'.$f2_day));
+
+	       		}
 
 		        $s_date1 = $start_date;
 		        $s_date2 = $second_date;
@@ -321,7 +347,8 @@ class GroupsOldController extends Controller {
 
 		return ;
 
-	}	
+	}
+
 }
 
 

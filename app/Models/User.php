@@ -46,6 +46,7 @@ class User extends Authenticatable {
         $banks = DB::table('banks')->select('id', 'bank_name')->get();
 
         return $banks;
-    }
+    }    
+
         
 }
