@@ -31,7 +31,7 @@
                         <label>Plan</label>
                         <selectize placeholder='Select Plan' ng-change="onChangePlan()" config="selectConfigPlans" options="plans" ng-model="formData.plan_id" required></selectize>
                     </div> 
-                    <div class="col-md-4 form-group" ng-if="emi_type != 0">
+                    <div class="col-md-2 form-group" ng-if="emi_type != 0">
                         <label>Start Date</label>
                         <select ng-model="formData.day" class="form-control" required ng-if="emi_type == 4">
                             <option value="">Day</option>
