@@ -68,7 +68,7 @@ class GroupsController extends Controller {
 		}
 
 		$blocks = DB::table('blocks')->get();
-		$plans = DB::table("plans")->select('id','plan_name')->get();
+		$plans = DB::table("plans")->select('id','plan_name')->where('status', 1)->get();
 
 		$data['success'] = true;
 		$data['group'] = $group;
