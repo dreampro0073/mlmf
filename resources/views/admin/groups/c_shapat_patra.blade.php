@@ -69,14 +69,14 @@
     </style>
 </head>
 <body>
-    <div class="row personal-bio">
+    <div class="row personal-bio" style="height:150px;">
         <div class="col-md-6">
             <img src="{{url('assets/img/logo.png')}}" style="height:60px;width:auto;"> &nbsp;&nbsp;
         </div>
         <div class="col-md-6">
             <div style="text-align: right;">
                 @if(isset($customer->joint_photo))
-                    <img src="{{url($customer->joint_photo)}}" style="width:200pxpx;height: 180px;object-fit: cover;float: right;">
+                    <img src="{{url($customer->joint_photo)}}" style="width:200pxpx;height: 150px;object-fit: cover;float: right;">
                     <p>Customer Photo</p>
                 @endif
             </div>

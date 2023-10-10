@@ -91,7 +91,7 @@
         </div>
 
     </div>
-    <div class="row personal-bio">
+    <div class="row personal-bio" style="height:160px;">
         <div class="col-md-6">
             <div class="bio">
                 <h4>
@@ -122,7 +122,7 @@
                 <div class="image">
                     @if(isset($customer->joint_photo))
 
-                        <img src="{{url($customer->joint_photo)}}" style="width:200pxpx;height: 180px;object-fit: cover;float: right;">
+                        <img src="{{url($customer->joint_photo)}}" style="width:200pxpx;height: 150px;object-fit: cover;float: right;">
                         
                     @endif
                 </div>
