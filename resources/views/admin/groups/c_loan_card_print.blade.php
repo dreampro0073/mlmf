@@ -122,8 +122,8 @@
                 <div class="image">
                     @if(isset($customer->joint_photo))
 
-                        <img src="{{url($customer->joint_photo)}}" style="width:200pxpx;height: 180px;object-fit: cover;">
-                        <p>Customer Photo</p>
+                        <img src="{{url($customer->joint_photo)}}" style="width:200pxpx;height: 180px;object-fit: cover;float: right;">
+                        
                     @endif
                 </div>
                 <!-- <div class="image" style="padding-left: 10px;">

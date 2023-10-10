@@ -76,7 +76,7 @@
         <div class="col-md-6">
             <div style="text-align: right;">
                 @if(isset($customer->joint_photo))
-                    <img src="{{url($customer->joint_photo)}}" style="width:200pxpx;height: 180px;object-fit: cover;">
+                    <img src="{{url($customer->joint_photo)}}" style="width:200pxpx;height: 180px;object-fit: cover;float: right;">
                     <p>Customer Photo</p>
                 @endif
             </div>
