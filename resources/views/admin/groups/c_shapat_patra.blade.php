@@ -74,7 +74,12 @@
             <img src="{{url('assets/img/logo.png')}}" style="height:60px;width:auto;"> &nbsp;&nbsp;
         </div>
         <div class="col-md-6">
-
+            <div style="text-align: right;">
+                @if(isset($customer->joint_photo))
+                    <img src="{{url($customer->joint_photo)}}" style="width:200pxpx;height: 180px;object-fit: cover;">
+                    <p>Customer Photo</p>
+                @endif
+            </div>
         </div>
     </div>
    

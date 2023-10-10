@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="image">
-                        <img src="{{url('/')}}/@{{customer.customer_photo}}" style="width:120px;height: 180px;object-fit: cover;">
+                        <img src="{{url('/')}}/@{{customer.joint_photo}}" style="width:200pxpx;height: 180px;object-fit: cover;">
                     </div>
                 </div>
 

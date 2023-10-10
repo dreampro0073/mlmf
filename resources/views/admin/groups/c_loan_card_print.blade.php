@@ -120,19 +120,19 @@
         <div class="col-md-6 text-right">
             <div class="row">
                 <div class="image">
-                    @if(isset($customer->guarantor_photo))
+                    @if(isset($customer->joint_photo))
 
-                        <img src="{{url($customer->customer_photo)}}" style="width:120px;height: 180px;object-fit: cover;">
+                        <img src="{{url($customer->joint_photo)}}" style="width:200pxpx;height: 180px;object-fit: cover;">
                         <p>Customer Photo</p>
                     @endif
                 </div>
-                <div class="image" style="padding-left: 10px;">
+                <!-- <div class="image" style="padding-left: 10px;">
                     @if(isset($customer->guarantor_photo))
                         <img src="{{url($customer->guarantor_photo)}}" style="width:120px;height: 180px;object-fit: cover;">
                         <p>Guarantor Photo</p>
                     @endif
 
-                </div>
+                </div> -->
             </div>
             
         </div>
