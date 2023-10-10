@@ -77,7 +77,7 @@
             <div style="text-align: right;">
                 @if(isset($customer->joint_photo))
                     <img src="{{url($customer->joint_photo)}}" style="width:200pxpx;height: 150px;object-fit: cover;float: right;">
-                    <p>Customer Photo</p>
+                    
                 @endif
             </div>
         </div>
