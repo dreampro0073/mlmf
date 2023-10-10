@@ -622,7 +622,7 @@ class GroupsController extends Controller {
 
 		$group = DB::table('groups')->select('groups.*','villages.village_name','plans.principal_amount','plans.interest_rate','plans.no_of_emis')->leftJoin('villages','villages.id','=','groups.village_id')->leftJoin('plans','plans.id','=','groups.plan_id')->where('groups.id', $request->group_id)->first();
 
-		$customer = DB::table('customers')->select('customers.name','customers.father_husband_name','customers.email','customers.mobile','customer_guarantor.name as guarantor_name','customer_guarantor.mobile as guarantor_mobile','customer_documents.customer_photo','group_customers.joint_photo','customers.unique_id')->leftJoin('customer_documents','customer_documents.customer_id','=','customers.id')->leftJoin('customer_guarantor','customer_guarantor.customer_id','=','customers.id')->where('customers.id','=',$customer_id)->first();
+		$customer = DB::table('customers')->select('customers.name','customers.father_husband_name','customers.email','customers.mobile','customer_guarantor.name as guarantor_name','customer_guarantor.mobile as guarantor_mobile','customer_documents.customer_photo','customer_documents.joint_photo','customers.unique_id')->leftJoin('customer_documents','customer_documents.customer_id','=','customers.id')->leftJoin('customer_guarantor','customer_guarantor.customer_id','=','customers.id')->where('customers.id','=',$customer_id)->first();
 
 		// dd($customer);
 
