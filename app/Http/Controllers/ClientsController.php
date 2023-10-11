@@ -181,45 +181,58 @@ class ClientsController extends Controller {
             	]);
 
 				$message = "Stored Successfully!";
+			}
 
 
             	$customer = DB::table('customers')->where('id',$customer_id)->first();
 
             	if($customer){
             		$year = date("Y",strtotime($customer->created_at));
-		            $id = $customer->id;
-		            $unique = $id.$year;
-		            $un_zero = "";
-		            $len = strlen($unique);
-		            
-		            switch ($len) {
-		                case 5:
-		                    $un_zero = "00000";
-		                    break;
-		                
-		                case 6:
-		                    $un_zero = "0000";
-		                    break;
-		                case 7:
-		                    $un_zero = "000";
-		                    break;
-		                case 8:
-		                    $un_zero = "00";
-		                    break;
-		                case 9:
-		                    $un_zero = "0";
-		                    break;
-		                default:
-		                break;
-		            }
-
-		            $unique_id = $un_zero.$unique;
+		            $customer->id;
+		            $unique = $year.'000000';
+		            $unique_id = $unique + $customer_id;
 
 		            DB::table('customers')->where('id',$customer->id)->update([
 		                'unique_id' =>$unique_id,
 		            ]);
-            	}	
-			}
+            	}
+
+
+            	// if($customer){
+            	// 	$year = date("Y",strtotime($customer->created_at));
+		           //  $id = $customer->id;
+		           //  $unique = $id.$year;
+		           //  $un_zero = "";
+		           //  $len = strlen($unique);
+		            
+		           //  switch ($len) {
+		           //      case 5:
+		           //          $un_zero = "00000";
+		           //          break;
+		                
+		           //      case 6:
+		           //          $un_zero = "0000";
+		           //          break;
+		           //      case 7:
+		           //          $un_zero = "000";
+		           //          break;
+		           //      case 8:
+		           //          $un_zero = "00";
+		           //          break;
+		           //      case 9:
+		           //          $un_zero = "0";
+		           //          break;
+		           //      default:
+		           //      break;
+		           //  }
+
+		           //  $unique_id = $un_zero.$unique;
+
+		           //  DB::table('customers')->where('id',$customer->id)->update([
+		           //      'unique_id' =>$unique_id,
+		           //  ]);
+            	// }	
+
 
 			$check = DB::table('customer_documents')->where('customer_id', $customer_id)->first();
 
