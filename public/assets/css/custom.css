@@ -6,8 +6,8 @@ body {
   color: #000 !important; }
 
 .bg-gradient-primary {
-  background-color: #353535;
-  background-image: linear-gradient(180deg, #353535 10%, #353535 100%);
+  background-color: #4e73df;
+  background-image: linear-gradient(180deg, #4e73dfa1 10%, #224abea3 100%);
   background-size: cover; }
 
 .name {

@@ -3,10 +3,10 @@
 
    
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fa fa-tachometer" aria-hidden="true"></i>
+        
+        <div class="sidebar-brand-text mx-3">
+            <img src="{{url('assets/img/logo.png')}}" style="height:60px;width:auto;">
         </div>
-        <div class="sidebar-brand-text mx-3">Admin</div>
     </a>
 
     
