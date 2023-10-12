@@ -628,6 +628,9 @@ class GroupsController extends Controller {
 
 		$group_id = $request->group_id;
 
+		$total_amount =0;
+		$total_int_amount =0;
+
 		if($group){
 			$group_dates = DB::table('group_emi_dates')->where('group_id',$group->id)->get();
 
@@ -650,9 +653,16 @@ class GroupsController extends Controller {
                 }
 
                 $group_date->emi_date = date("d/m/Y",strtotime($group_date->emi_date));
+                $group_date->interest_payment = round($group_date->interest_payment,0);
+                $group_date->emi_amount = round($group_date->emi_amount,0);
+
+                $total_amount += $group_date->emi_amount;
+                $total_int_amount += $group_date->interest_payment;
 
 			}
 			$group->group_dates = $group_dates;
+			$group->total_amount = $total_amount;
+			$group->total_int_amount = round($total_int_amount,0);
 		
 		}
 
@@ -689,8 +699,13 @@ class GroupsController extends Controller {
 			foreach ($group_dates as $group_date) {
                 $check = DB::table('emi_collection')->where('group_id',$group_id)->where('customer_id',$customer_id)->where('group_emi_date_id',$group_date->id)->where('collected_amount',1)->first();
 
+                $group_date->interest_payment = round($group_date->interest_payment,0);
+                $group_date->emi_amount = round($group_date->emi_amount,0);
+
                 $total_amount += $group_date->emi_amount;
                 $total_int_amount += $group_date->interest_payment;
+
+                
 
                 // dd($check);
                	$group_date->emi_collected = false;
@@ -714,6 +729,9 @@ class GroupsController extends Controller {
 		}
 
 		define("DOMPDF_UNICODE_ENABLED", true);
+
+		$total_amount = round($total_amount,0);
+		$total_int_amount = round($total_int_amount,0);
 
 		// return view('admin.groups.c_loan_card_print',compact('group','customer','total_amount','total_int_amount'));
 		$html = view('admin.groups.c_loan_card_print',compact('group','customer','total_amount','total_int_amount'));
