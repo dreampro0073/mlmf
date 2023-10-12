@@ -181,7 +181,6 @@ class ClientsController extends Controller {
             	]);
 
 				$message = "Stored Successfully!";
-			}
 
 
             	$customer = DB::table('customers')->where('id',$customer_id)->first();
@@ -197,6 +196,7 @@ class ClientsController extends Controller {
 		            ]);
             	}
 
+			}
 
             	// if($customer){
             	// 	$year = date("Y",strtotime($customer->created_at));
