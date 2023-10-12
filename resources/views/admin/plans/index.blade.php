@@ -46,7 +46,10 @@
                             <td>{{ $item->type_name}}</td>
                             <td>
                                 <a href="{{url('admin/plans/add/'.$item->id)}}" class="btn btn-primary btn-sm">Edit</a> 
-                               <a href="{{url('admin/plans/delete/'.$item->id)}}" onclick="return confirm('Are you sure to Delete?');" class="btn btn-danger btn-sm">Delete</a> 
+
+                                <a ng-click="viewPlan({{$item->id}})" class="btn btn-primary btn-sm">View</a> 
+                                
+                                <a href="{{url('admin/plans/delete/'.$item->id)}}" onclick="return confirm('Are you sure to Delete?');" class="btn btn-danger btn-sm">Delete</a> 
                             </td>
                         </tr>
                         @endforeach
@@ -56,6 +59,64 @@
         </div>
     </div>
     
+    <div id="planModal" class="modal custom-modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Plan : @{{plan.plan_name}}
+                    <button type="btn" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        
+                        <div class="col-md-4">
+                            <div class="profile-div">
+                                <span>Plan Name</span>
+                                <label>@{{plan.plan_name}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="profile-div">
+                                <span>Principal Amount</span>
+                                <label>@{{plan.principal_amount}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="profile-div">
+                                <span>Time Line (IN Days)</span>
+                                <label>@{{plan.time_line}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="profile-div">
+                                <span>Interest Rate (%)</span>
+                                <label>@{{plan.interest_rate}} </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="profile-div">
+                                <span>EMI Type</span>
+                                <label>@{{plan.type_name}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="profile-div">
+                                <span>Number Of EMIs</span>
+                                <label>@{{plan.no_of_emis}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="profile-div">
+                                <span>EMI Amount</span>
+                                <label>@{{plan.emi_amount}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
     
 </div>
 @endsection

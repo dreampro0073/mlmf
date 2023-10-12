@@ -47,5 +47,15 @@ app.controller('plansCtrl', function($scope , $http, $timeout , DBService) {
         });
     }
 
+    $scope.viewPlan = function(plan_id){
+        $scope.plan_id = plan_id;
+        DBService.postCall({plan_id : $scope.plan_id }, '/api/plans/view-plan').then((data) => {
+            if(data.success){
+                $scope.plan = data.plan;
+                $("#planModal").modal("show"); 
+            }
+        });
+    }
+
     
 })

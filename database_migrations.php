@@ -97,5 +97,8 @@ ALTER TABLE `customers` CHANGE `marita_status` `marital_status` INT(11) NOT NULL
 ALTER TABLE `group_customers` ADD `purpose` TEXT NULL DEFAULT NULL AFTER `customer_id`;
 ALTER TABLE `groups` ADD `insurance_fee` VARCHAR(20) NULL DEFAULT NULL AFTER `pin_code`, ADD `processing_fee` VARCHAR(20) NULL DEFAULT NULL AFTER `insurance_fee`;
 
+// Devendra 11Oct2023
+ALTER TABLE `emi_collection` ADD `penalty_amount` VARCHAR(20) NULL DEFAULT NULL AFTER `collected_amount`, ADD `remark` TEXT NULL DEFAULT NULL AFTER `penalty_amount`;
+
 
 ?>

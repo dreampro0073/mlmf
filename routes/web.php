@@ -82,6 +82,9 @@ Route::group(['prefix'=>"api"], function(){
 	Route::group(['prefix'=>"plans"], function(){
 		Route::post('/init',[PlanController::class,'planInit']);
 		Route::post('/store',[PlanController::class,'planStore']);
+		
+		Route::post('/view-plan',[PlanController::class,'viewPlan']);
+
 	});
 
 	Route::group(['prefix'=>"clients"], function(){
@@ -106,6 +109,9 @@ Route::group(['prefix'=>"api"], function(){
 		Route::post('/store-purpose/{group_customer_id}',[GroupsController::class,'storePurpose']);
 
 		Route::post('/select-plan',[GroupsController::class,'getPlanType']);
+		
+		Route::post('/get-penalty',[GroupsController::class,'getPenalty']);
+		Route::post('/store-penalty',[GroupsController::class,'storePenalty']);
 	});
 });
 

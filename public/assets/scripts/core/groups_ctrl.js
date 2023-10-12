@@ -300,6 +300,28 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService) {
         });
     }
 
+    $scope.payOldEMI = function(emi_collection_id){
+        $scope.emi_collection_id = emi_collection_id;
+        DBService.postCall({ emi_collection_id : $scope.emi_collection_id},'/api/groups/get-penalty').then((data) => {
+            if(data.success){
+                $scope.formData = data.penalty_emi;
+                $("#payOldEMI-modal").modal("show");
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+
+    $scope.onSubmitPenalty = function(){
+        DBService.postCall($scope.formData,'/api/groups/store-penalty').then((data) => {
+            if(data.success){
+                alert(data.message);
+                $("#payOldEMI-modal").modal("hide");
+                $scope.viewCollection();
+            }
+        });
+    }
+
 });
 
 app.controller('loanCardCtrl', function($scope , $http, $timeout , DBService) {

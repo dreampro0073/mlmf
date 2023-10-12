@@ -811,6 +811,34 @@ class GroupsController extends Controller {
 		$data['success'] = true;
 		return Response::json($data, 200, []);
 	}
+
+	public function getPenalty(Request $request){
+		$penalty_emi = DB::table('emi_collection')->select('emi_collection.*', 'group_emi_dates.emi_amount')->leftJoin('group_emi_dates', 'group_emi_dates.id', 'emi_collection.group_emi_date_id')->where('emi_collection.id', $request->emi_collection_id)->where('collected_amount', null)->first();
+
+		if($penalty_emi){
+			$data['success'] = true;
+			$data['penalty_emi'] = $penalty_emi;
+		} else {
+			$data['success'] = false;
+			$data['message'] = 'Data Not Found !';
+		}
+
+		return Response::json($data, 200, []);
+	}
+
+	public function storePenalty(Request $request){
+		DB::table("emi_collection")->where('id', $request->id)->update([
+			'remark'=>$request->remark,
+			'penalty_amount'=>$request->penalty_amount,
+			'collected_amount'=>1,
+		]);
+
+
+		$data['success'] = true;
+		$data['message'] = 'Successfully Updated!';
+
+ 		return Response::json($data,200,[]);
+	}
 }
 
 

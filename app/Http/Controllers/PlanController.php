@@ -60,6 +60,16 @@ class PlanController extends Controller {
 
 		return Response::json($data, 200, []);
 	}	
+	
+	public function viewPlan(Request $request){
+
+		$plan = DB::table('plans')->select('plans.*', 'emi_types.type_name')->leftjoin('emi_types', 'emi_types.id', '=', 'plans.emi_type')->where('plans.id', $request->plan_id)->first();
+
+		$data['success'] = true;
+		$data['plan'] = $plan;
+
+		return Response::json($data, 200, []);
+	}	
 
 	public function planStore(Request $request){
 
