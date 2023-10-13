@@ -199,11 +199,11 @@
                 </tr>
             @endforeach
             <tr>
+                <td>Total</td>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td>{{$total_int_amount}}</td>   
+                <td>{{$total_int_amount}}</td>
+                <td></td>   
                 <td>{{$total_amount}}</td> 
                 <td></td>   
                 <td></td> 

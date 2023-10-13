@@ -628,6 +628,9 @@ class GroupsController extends Controller {
 
 		$group_id = $request->group_id;
 
+		$total_amount =0;
+		$total_int_amount =0;
+
 		if($group){
 			$group_dates = DB::table('group_emi_dates')->where('group_id',$group->id)->get();
 
@@ -650,9 +653,16 @@ class GroupsController extends Controller {
                 }
 
                 $group_date->emi_date = date("d/m/Y",strtotime($group_date->emi_date));
+                $group_date->interest_payment = round($group_date->interest_payment,0);
+                $group_date->emi_amount = round($group_date->emi_amount,0);
+
+                $total_amount += $group_date->emi_amount;
+                $total_int_amount += $group_date->interest_payment;
 
 			}
 			$group->group_dates = $group_dates;
+			$group->total_amount = $total_amount;
+			$group->total_int_amount = round($total_int_amount,0);
 		
 		}
 
@@ -676,7 +686,7 @@ class GroupsController extends Controller {
 
 		$group = DB::table('groups')->select('groups.*','villages.village_name','plans.principal_amount','plans.interest_rate','plans.no_of_emis','plans.time_line')->leftJoin('villages','villages.id','=','groups.village_id')->leftJoin('plans','plans.id','=','groups.plan_id')->where('groups.id', $group_id)->first();
 
-		$customer = DB::table('customers')->select('customers.name','customers.father_husband_name','customers.email','customers.mobile','customer_guarantor.name as guarantor_name','customer_guarantor.mobile as guarantor_mobile','customer_guarantor.photo as guarantor_photo','customer_documents.customer_photo','group_customers.id as group_customer_id','customers.unique_id','customer_documents.joint_photo')->leftJoin('customer_documents','customer_documents.customer_id','=','customers.id')->leftJoin('customer_guarantor','customer_guarantor.customer_id','=','customers.id')->leftJoin('group_customers','group_customers.customer_id','=','customers.id')->where('customers.id','=',$customer_id)->where('group_customers.group_id',$group_id)->first();
+		$customer = DB::table('customers')->select('customers.name','customers.father_husband_name','customers.unique_id','customers.email','customers.mobile','customer_guarantor.name as guarantor_name','customer_guarantor.mobile as guarantor_mobile','customer_guarantor.photo as guarantor_photo','customer_documents.customer_photo','group_customers.id as group_customer_id','customer_documents.joint_photo')->leftJoin('customer_documents','customer_documents.customer_id','=','customers.id')->leftJoin('customer_guarantor','customer_guarantor.customer_id','=','customers.id')->leftJoin('group_customers','group_customers.customer_id','=','customers.id')->where('customers.id','=',$customer_id)->where('group_customers.group_id',$group_id)->first();
 
 		$total_amount =0;
 		$total_int_amount =0;
@@ -689,8 +699,13 @@ class GroupsController extends Controller {
 			foreach ($group_dates as $group_date) {
                 $check = DB::table('emi_collection')->where('group_id',$group_id)->where('customer_id',$customer_id)->where('group_emi_date_id',$group_date->id)->where('collected_amount',1)->first();
 
+                $group_date->interest_payment = round($group_date->interest_payment,0);
+                $group_date->emi_amount = round($group_date->emi_amount,0);
+
                 $total_amount += $group_date->emi_amount;
                 $total_int_amount += $group_date->interest_payment;
+
+                
 
                 // dd($check);
                	$group_date->emi_collected = false;
@@ -715,6 +730,9 @@ class GroupsController extends Controller {
 
 		define("DOMPDF_UNICODE_ENABLED", true);
 
+		$total_amount = round($total_amount,0);
+		$total_int_amount = round($total_int_amount,0);
+
 		// return view('admin.groups.c_loan_card_print',compact('group','customer','total_amount','total_int_amount'));
 		$html = view('admin.groups.c_loan_card_print',compact('group','customer','total_amount','total_int_amount'));
 
@@ -727,7 +745,7 @@ class GroupsController extends Controller {
 		$dompdf->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream();
+		$dompdf->stream($customer->unique_id."-".$customer->name.'.pdf');
 
 
 	}
@@ -743,7 +761,7 @@ class GroupsController extends Controller {
 		$group = DB::table('groups')->select('groups.*','villages.village_name','plans.principal_amount','plans.interest_rate','plans.no_of_emis','plans.time_line','blocks.block_name','emi_types.type_name')->leftJoin('villages','villages.id','=','groups.village_id')->leftJoin('plans','plans.id','=','groups.plan_id')->leftJoin('emi_types','emi_types.id','=','plans.emi_type')->leftJoin('blocks','blocks.id','=','groups.block_id')->where('groups.id', $group_id)->first();
 
 		
-		$customer = DB::table('customers')->select('customers.name','customers.father_husband_name','customers.email','customers.mobile','customers.aadhaar_no','customers.pan_no','customers.voter_id_no','customers.dob','customer_guarantor.name as guarantor_name','customer_guarantor.mobile as guarantor_mobile','customer_guarantor.photo as guarantor_photo','customer_guarantor.aadhaar_no as guarantor_aadhaar_no','customer_guarantor.pan_no as guarantor_pan_no','customer_documents.customer_photo','group_customers.id as group_customer_id','b1.bank_name as c_bank_name','customers.ac_no','customers.ifsc_code','b2.bank_name as guarantor_bank_name','customer_guarantor.ifsc_code as guarantor_ifsc_code','customer_guarantor.ac_no as guarantor_ac_no','customer_guarantor.voter_id_no as guarantor_voter_id_no','group_customers.purpose','customer_documents.joint_photo')->leftJoin('customer_documents','customer_documents.customer_id','=','customers.id')->leftJoin('customer_guarantor','customer_guarantor.customer_id','=','customers.id')->leftJoin('group_customers','group_customers.customer_id','=','customers.id')->leftJoin('banks as b1','b1.id','=','customers.bank_id')->leftJoin('banks as b2','b2.id','=','customer_guarantor.bank_id')->where('customers.id','=',$customer_id)->where('group_customers.group_id',$group_id)->first();
+		$customer = DB::table('customers')->select('customers.name','customers.father_husband_name','customers.email','customers.mobile','customers.aadhaar_no','customers.pan_no','customers.voter_id_no','customers.dob','customer_guarantor.name as guarantor_name','customer_guarantor.mobile as guarantor_mobile','customer_guarantor.photo as guarantor_photo','customer_guarantor.aadhaar_no as guarantor_aadhaar_no','customer_guarantor.pan_no as guarantor_pan_no','customer_documents.customer_photo','group_customers.id as group_customer_id','b1.bank_name as c_bank_name','customers.ac_no','customers.ifsc_code','b2.bank_name as guarantor_bank_name','customer_guarantor.ifsc_code as guarantor_ifsc_code','customer_guarantor.ac_no as guarantor_ac_no','customer_guarantor.voter_id_no as guarantor_voter_id_no','group_customers.purpose','customer_documents.joint_photo','customers.unique_id')->leftJoin('customer_documents','customer_documents.customer_id','=','customers.id')->leftJoin('customer_guarantor','customer_guarantor.customer_id','=','customers.id')->leftJoin('group_customers','group_customers.customer_id','=','customers.id')->leftJoin('banks as b1','b1.id','=','customers.bank_id')->leftJoin('banks as b2','b2.id','=','customer_guarantor.bank_id')->where('customers.id','=',$customer_id)->where('group_customers.group_id',$group_id)->first();
 		$total_amount =0;
 		$total_int_amount =0;
 		
@@ -789,7 +807,9 @@ class GroupsController extends Controller {
 		$dompdf->loadHtml($html);
 		$dompdf->setPaper('A4',);
 		$dompdf->render();
-		$dompdf->stream();
+		// $dompdf->stream();
+
+		$dompdf->stream('sapat'.$customer->unique_id."-".$customer->name.'.pdf');
 
 
 	}

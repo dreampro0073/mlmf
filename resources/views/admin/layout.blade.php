@@ -24,10 +24,11 @@
 
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css">
 
-
-    <link href="{{url('assets/css/custom.css')}}" rel="stylesheet">
-
     <?php $version = "1.2.4"; ?>
+
+
+    <link href="{{url('assets/css/custom.css?v='.$version)}}" rel="stylesheet">
+
 
     
     @yield('header_scripts')

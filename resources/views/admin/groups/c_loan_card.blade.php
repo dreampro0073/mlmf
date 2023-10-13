@@ -111,6 +111,16 @@
                                 <td></td>   
                                 <td></td>   
                             </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td></td>
+                                <td></td>
+                                <td>@{{group.total_int_amount}}</td>
+                                <td></td>
+                                <td>@{{group.total_amount}}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             
                         </tbody>
                     </table>
