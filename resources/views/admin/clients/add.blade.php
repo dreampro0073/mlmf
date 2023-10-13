@@ -74,14 +74,29 @@
                     </div>
 
 
-                    <div class="form-group col-4">
+                    <!-- <div class="form-group col-4">
                         <label>State</label>
                         <selectize placeholder='Select State' ng-change="fetchDistricts()" config="selectConfig" options="states" ng-model="formData.state_id" required></selectize>
+
+
+                    </div> -->
+                    <div class="col-md-4 form-group">
+                        <label>State</label>
+                        <select ng-model="formData.state_id" class="form-control" convert-to-number ng-change="fetchDistricts()">
+                            <option value="0">--select--</option>
+                            <option ng-repeat="item in states" ng-value=@{{item.id}}>@{{ item.state_name}}</option>
+                        </select>
                     </div>
 
+
                     <div class="form-group col-4" ng-if="formData.state_id > 0">
+                       <!--  <label>District</label>
+                        <selectize placeholder='Select District' ng-change="getBlocks()" config="selectConfigDis" options="districts" ng-model="formData.district_id" required></selectize> -->
                         <label>District</label>
-                        <selectize placeholder='Select District' ng-change="getBlocks()" config="selectConfigDis" options="districts" ng-model="formData.district_id" required></selectize>
+                        <select ng-model="formData.district_id" class="form-control" convert-to-number ng-change="getBlocks()">
+                            <option value="0">--select--</option>
+                            <option ng-repeat="item in districts" ng-value=@{{item.id}}>@{{ item.city_name}}</option>
+                        </select>
                     </div>                                      
 
 
@@ -95,7 +110,11 @@
 
                     <div class="form-group col-4" ng-if="formData.block_id > 0" >
                         <label>Village</label>
-                        <selectize placeholder='Select Villages' config="selectConfigVillage" options="villages" ng-model="formData.village_id" required></selectize>
+                        <!-- <selectize placeholder='Select Villages' config="selectConfigVillage" options="villages" ng-model="formData.village_id" required></selectize> -->
+                        <select ng-model="formData.village_id" ng-change="getVillages()" class="form-control" required convert-to-number>
+                            <option value="0">--select--</option>
+                            <option ng-repeat="item in villages" value=@{{item.id}}>@{{ item.village_name}}</option>
+                        </select>
                     </div>                                                          
                 </div>
 

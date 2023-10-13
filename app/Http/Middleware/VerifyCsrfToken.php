@@ -15,5 +15,10 @@ class VerifyCsrfToken extends Middleware
         //
         '/ccavenue/request',
         '/ccavenue/response',
+        // '/api/clients/store',
+        // '/api/districts',
+        // '/api/blocks',
+        // '/api/villages'
+        'api/*'
     ];
 }

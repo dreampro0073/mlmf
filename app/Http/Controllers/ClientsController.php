@@ -162,7 +162,7 @@ class ClientsController extends Controller {
 				'tehsil_id'=>isset($request['tehsil_id'])?$request['tehsil_id']:0,
 				'block_id'=>isset($request['block_id'])?$request['block_id']:0,
 				'village_id'=>isset($request['village_id'])?$request['village_id']:0,
-				'bank_id'=>$request['bank_id'],
+				'bank_id'=>isset($request['bank_id'])?$request['bank_id']:0,
 				'ifsc_code'=>$request['ifsc_code'],
 				'ac_no'=>$request['ac_no'],
 				

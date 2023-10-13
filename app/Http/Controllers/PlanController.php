@@ -32,7 +32,18 @@ class PlanController extends Controller {
 
 
 		$plans = $plans->get();
+		// $final_plans = [];
 
+		foreach ($plans as $key => $plan) {
+			$plan->editable = true;
+			$count = DB::table('groups')->where('plan_id',$plan->id)->where('active',1)->count();
+
+			if($count > 0){
+				$plan->editable = false;
+			}
+		}
+
+		
 		return view('admin.plans.index', [
             "sidebar" => "plans",
             "subsidebar" => "plans",

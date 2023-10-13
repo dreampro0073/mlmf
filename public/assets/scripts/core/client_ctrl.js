@@ -3,7 +3,8 @@ app.controller('clientsCtrl', function($scope , $http, $timeout , DBService, Upl
     $scope.formData = {
         state_id : 0,
         district_id : 0,
-        block_id : 0,
+        block_id :0,
+        village_id:0,
     };
     $scope.guarantorData = {};
     $scope.client = {};

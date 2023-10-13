@@ -45,7 +45,9 @@
                             <td>{{ $item->no_of_emis}}</td>
                             <td>{{ $item->type_name}}</td>
                             <td>
-                                <a href="{{url('admin/plans/add/'.$item->id)}}" class="btn btn-primary btn-sm">Edit</a> 
+                                @if($item->editable)
+                                <a href="{{url('admin/plans/add/'.$item->id)}}" class="btn btn-primary btn-sm">Edit</a>
+                                @endif 
 
                                 <a ng-click="viewPlan({{$item->id}})" class="btn btn-primary btn-sm">View</a> 
                                 
