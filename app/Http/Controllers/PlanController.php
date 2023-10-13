@@ -121,6 +121,9 @@ class PlanController extends Controller {
 			// $total_amount = round($emi_amount * $no_of_emis, 2);
 			// $interest_amount = $total_amount - $request->principal_amount;
 
+
+
+
 			$data= [
 				'principal_amount'=>$request->principal_amount,
 				'interest_rate'=>$request->interest_rate,
@@ -128,10 +131,23 @@ class PlanController extends Controller {
 				'time_line'=>$request->time_line,
 				'emi_type'=>$request->emi_type,
 				'no_of_emis'=>$no_of_emis,
-				'emi_amount'=>$emi_amount,
+				// 'emi_amount'=>$emi_amount,
 				// 'total_amount'=>$total_amount,
 				// 'interest_amount'=>$interest_amount,
 			];
+
+			$principal = $request->principal_amount;
+			$annual_interest_rate = $request->interest_rate;
+			$loan_tenure_months = $no_of_emis;
+
+			$monthly_interest_rate = ($annual_interest_rate / 12) / 100;
+			$emi_numerator = $principal * $monthly_interest_rate * pow((1 + $monthly_interest_rate), $loan_tenure_months);
+			$emi_denominator = pow((1 + $monthly_interest_rate), $loan_tenure_months) - 1;
+			$emi = $emi_numerator / $emi_denominator;
+
+			$data['emi_amount'] = $emi;
+
+
 
 			if($request->id){
 				DB::table('plans')->where('id', $request->id)->update($data);
