@@ -84,7 +84,7 @@
                         <label>State</label>
                         <select ng-model="formData.state_id" class="form-control" convert-to-number ng-change="fetchDistricts()">
                             <option value="0">--select--</option>
-                            <option ng-repeat="item in states" ng-value=@{{item.id}}>@{{ item.state_name}}</option>
+                            <option ng-repeat="item in states" value=@{{item.id}}>@{{ item.state_name}}</option>
                         </select>
                     </div>
 
@@ -95,7 +95,7 @@
                         <label>District</label>
                         <select ng-model="formData.district_id" class="form-control" convert-to-number ng-change="getBlocks()">
                             <option value="0">--select--</option>
-                            <option ng-repeat="item in districts" ng-value=@{{item.id}}>@{{ item.city_name}}</option>
+                            <option ng-repeat="item in districts" value=@{{item.id}}>@{{ item.city_name}}</option>
                         </select>
                     </div>                                      
 

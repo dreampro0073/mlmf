@@ -19,6 +19,7 @@ class VerifyCsrfToken extends Middleware
         // '/api/districts',
         // '/api/blocks',
         // '/api/villages'
-        'api/*'
+        'api/*',
+        'admin/uploadFile'
     ];
 }
