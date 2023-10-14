@@ -686,7 +686,9 @@ class GroupsController extends Controller {
 
 		$group = DB::table('groups')->select('groups.*','villages.village_name','plans.principal_amount','plans.interest_rate','plans.no_of_emis','plans.time_line')->leftJoin('villages','villages.id','=','groups.village_id')->leftJoin('plans','plans.id','=','groups.plan_id')->where('groups.id', $group_id)->first();
 
-		$customer = DB::table('customers')->select('customers.name','customers.father_husband_name','customers.unique_id','customers.email','customers.mobile','customer_guarantor.name as guarantor_name','customer_guarantor.mobile as guarantor_mobile','customer_guarantor.photo as guarantor_photo','customer_documents.customer_photo','group_customers.id as group_customer_id','customer_documents.joint_photo')->leftJoin('customer_documents','customer_documents.customer_id','=','customers.id')->leftJoin('customer_guarantor','customer_guarantor.customer_id','=','customers.id')->leftJoin('group_customers','group_customers.customer_id','=','customers.id')->where('customers.id','=',$customer_id)->where('group_customers.group_id',$group_id)->first();
+		// dd($group);
+
+		$customer = DB::table('customers')->select('customers.name','customers.father_husband_name','customers.unique_id','customers.email','customers.mobile','customer_guarantor.name as guarantor_name','customer_guarantor.mobile as guarantor_mobile','customer_guarantor.photo as guarantor_photo','customer_documents.customer_photo','group_customers.id as group_customer_id','customer_documents.joint_photo','customers.unique_id')->leftJoin('customer_documents','customer_documents.customer_id','=','customers.id')->leftJoin('customer_guarantor','customer_guarantor.customer_id','=','customers.id')->leftJoin('group_customers','group_customers.customer_id','=','customers.id')->where('customers.id','=',$customer_id)->where('group_customers.group_id',$group_id)->first();
 
 		$total_amount =0;
 		$total_int_amount =0;

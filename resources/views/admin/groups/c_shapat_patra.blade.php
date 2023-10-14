@@ -87,9 +87,11 @@
     <div class="row personal-bio">
         <div class="col-md-6">
             <div class="bio">
-                <p class="h-font">समूह का पता : <span>{{$group->group_name}}</span></p>
+                <p class="h-font fs-12">समूह : <span>{{$group->group_name}}</span></p>
                 <p class="fs-12">Address : <span>{{$group->village_name}}</span></p>
-                <p class="h-font">ऋणकर्ता का नाम  : <span>{{$customer->name}}</span></p>
+                <p class="h-font fs-12">Customer Id  : <span>{{$customer->unique_id}}</span></p>
+                <p class="h-font fs-12">ऋणकर्ता का नाम  : <span>{{$customer->name}}</span></p>
+                <p class="h-font fs-12">Mobile Number  : <span>{{$customer->mobile}}</span></p>
                 <p class="fs-12">K Y C :1 -Aadhr Card No:  <span>{{$customer->aadhaar_no}}</span></p>
                 <p class="fs-12">K Y C :2 -Pan Card No: <span>{{$customer->pan_no}}</span></p>
                 <p class="fs-12">K Y C :3 -Voter Card No: <span>{{$customer->voter_id_no}}</span></p>
@@ -107,7 +109,7 @@
                 <p class="fs-12">
                     Loan Amount: <span>{{$group->principal_amount}}</span>
                 </p>
-                <p class="h-font">ऋणकर्ता के पुत्र  का  : <span>{{$customer->guarantor_name}}</span></p>
+                <p class="h-font fs-12">ऋणकर्ता के पुत्र  का  : <span>{{$customer->guarantor_name}}</span></p>
                 <p class="fs-12">K Y C :1 -Aadhr Card No:  <span>{{$customer->guarantor_aadhaar_no}}</span></p>
                 <p class="fs-12">K Y C :2 -Pan Card No: <span>{{$customer->guarantor_pan_no}}</span></p>
                 <p class="fs-12">K Y C :3 -Voter Card No: <span>{{$customer->guarantor_voter_id_no}}</span></p>

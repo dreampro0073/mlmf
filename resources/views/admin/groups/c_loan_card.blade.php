@@ -23,6 +23,9 @@
             <div class="row personal-bio">
                 <div class="col-md-6">
                     <div class="bio">
+                        <h4>
+                            Group Name: @{{group.group_name}}
+                        </h4>
                         <h5>
                             Customer's Details
                         </h5>
@@ -57,9 +60,7 @@
             <div class="row personal-bio mb-4">
                 <div class="col-md-6">
                     <div class="bio">
-                        <h5>
-                            Borrower Sl. No.
-                        </h5>
+                       
                         <p>
                             Amount: <span>@{{group.principal_amount}}</span>
                         </p>

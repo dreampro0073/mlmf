@@ -95,10 +95,13 @@
         <div class="col-md-6">
             <div class="bio">
                 <h4>
+                    Group Name: {{$group->group_name}}
+                </h4>
+                <h4>
                     Customer's Details
                 </h4>
                 <p>
-                    ID: <span>{{$customer->unique_id}}</span>
+                   Customer ID: <span>{{$customer->unique_id}}</span>
                 </p>
                 <p>
                     Name: <span>{{$customer->name}}</span>
@@ -142,9 +145,9 @@
     <div class="row personal-bio mb-4">
         <div class="col-md-6">
             <div class="bio">
-                <p>
+                <!-- <p>
                     Borrower Sl. No. {{$group->id.$customer->group_customer_id}}
-                </p>
+                </p> -->
                 <p>
                     Amount: <span>{{$group->principal_amount}}</span>
                 </p>
