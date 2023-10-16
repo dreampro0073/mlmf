@@ -55,7 +55,8 @@
         }
         li{
             font-size: 12px;
-            margin-bottom: 2px;
+            margin-bottom:0px;
+            line-height: 1.2;
         }
         .page-break {
             page-break-after: always;
@@ -65,6 +66,9 @@
         }
         .fs-12{
             font-size: 12px;
+        }
+        .mb-0{
+            margin-bottom: 0;
         }
     </style>
 </head>
@@ -87,11 +91,11 @@
     <div class="row personal-bio">
         <div class="col-md-6">
             <div class="bio">
-                <p class="h-font fs-12">समूह : <span>{{$group->group_name}}</span></p>
-                <p class="fs-12">Address : <span>{{$group->village_name}}</span></p>
-                <p class="h-font fs-12">Customer Id  : <span>{{$customer->unique_id}}</span></p>
-                <p class="h-font fs-12">ऋणकर्ता का नाम  : <span>{{$customer->name}}</span></p>
-                <p class="h-font fs-12">Mobile Number  : <span>{{$customer->mobile}}</span></p>
+                <p class="h-font fs-12 mb-0">समूह : <span>{{$group->group_name}}</span></p>
+                <p class="fs-12 mb-0">Address : <span>{{$group->village_name}}</span></p>
+                <p class="h-font fs-12 mb-0">Customer Id  : <span>{{$customer->unique_id}}</span></p>
+                <p class="h-font fs-12 mb-0">ऋणकर्ता का नाम  : <span>{{$customer->name}}</span></p>
+                <p class="h-font fs-12 mb-0">Mobile Number  : <span>{{$customer->mobile}}</span></p>
                 <p class="fs-12">K Y C :1 -Aadhr Card No:  <span>{{$customer->aadhaar_no}}</span></p>
                 <p class="fs-12">K Y C :2 -Pan Card No: <span>{{$customer->pan_no}}</span></p>
                 <p class="fs-12">K Y C :3 -Voter Card No: <span>{{$customer->voter_id_no}}</span></p>
@@ -127,7 +131,7 @@
     <hr>
 
     <div>
-        <p class="h-font">
+        <p class="h-font fs-12">
             चूंकि मानव परिवार के सभी सदस्यों के जन्मजात गौरव और समान
         </p>
         <p class="h-font fs-12">
@@ -150,26 +154,27 @@
         <p class="h-font fs-12">
             मै ऋणकर्ता महालक्ष्मी माइक्रो फाइनेंस कंपनियां के निम्लिखित उत्पाद खरीद रही हूँ
         </p>
-        <p style="margin:10px 0;">
+        <p style="margin:5px 0;">
             _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _ 
         </p>
 
-        <p class="h-font fs-12">
+        <p class="h-font fs-12 ">
             श्रीमती  {{$customer->name}}  पत्नी/पुत्र   {{$customer->guarantor_name}}  निवासी  <span>{{$group->village_name}}</span>  द्वारा आवेदन पर और {{$group->principal_amount}}रु. के प्रकरण शुल्क  {{$group->processing_fee}} /-के सेवा कर इव् ˈक्रेडिट् RS- <span>{{$group->insurance_fee}}</span>/-बीमा प्रीमियर का भुगतान करने के अध्यादिन महालक्ष्मी  माइक्रो फाइनेंस द्वारा {{$group->principal_amount}} रु. का ऋण स्वीकृत किया जाता है| ऋण की रकम {{$group->interest_rate}} % (हासमान शेष विधि) प्रति वर्ष की लागु ब्याज दर के साथ {{$group->no_of_emis}} समान अर्धमासिक किस्तों मै प्रति देय है| प्रभावी वार्षिक प्रतिशत दर {{$group->no_of_emis}} है| स्वीकृत राशि  {{$group->principal_amount}}/-रु.
         </p>
-        <p class="h-font fs-12">
+        <p class="h-font fs-12 ">
             दिनांक: {{$group->start_date}}
         </p>
-        <p class="h-font fs-12">
+        <p class="h-font fs-12 ">
             ब्रांच मैनेजर के हस्ताक्षर/कर्मचारी आईडी:ऋण की निबंधन इव् शर्ते
         </p>
-        <p class="h-font fs-12">
-            इसके द्वारा मुझे  {{$customer->name}}  पत्नी  पुत्र  {{$customer->guarantor_name}}  निवासी  <span>{{$group->village_name}}</span> गांव, जिसका महालक्ष्मी माइक्रो फाइनेंस क o का है|                                                                                        </p>
-        <p class="h-font fs-12">
+        <p class="h-font fs-12 ">
+            इसके द्वारा मुझे  {{$customer->name}}  पत्नी  पुत्र  {{$customer->guarantor_name}}  निवासी  <span>{{$group->village_name}}</span> गांव, जिसका महालक्ष्मी माइक्रो फाइनेंस क o का है|
+        </p>
+        <p class="h-font fs-12 ">
             पृष्ठ 1पर  उल्लिखित ऋण निबंधनो इव् शर्तो को मेरी देशी भाषा मै समझा दिया गया है और मै अपनी  स्वतंत्र इच्छा और चाह के उक्त ऋण प्राप्त करने के लिए उक्त निबंधन एवं शर्तो  पर सहमत हू| 
 
         </p>
-        <p class="h-font" style="text-align: right;margin-top: 45px;">
+        <p class="h-font fs-12 " style="text-align: right;margin-top: 45px;">
             ✕ ऋणकर्ता के हस्ताक्षर
         </p>
     </div>
@@ -178,11 +183,11 @@
     <div class="page-break"></div>
 
     <div>
-        <p class="h-font fs-12">
+        <p class="h-font fs-12 mb-0">
             मांग प्रतिज्ञा पत्र
         </p>
 
-        <p class="h-font fs-12">
+        <p class="h-font fs-12 mb-0">
             मांगने पर मै/हम  <span>{{$customer->name}}</span>  पुत्र/WO/पुत्र  {{$customer->guarantor_name}}  नीचे हस्ताक्षरकर्ता संयुक्त रूप से और अलग-अलग प्राप्तकिये गए मूल्य के लिए  <span>{{$group->principal_amount}}</span>/- रु. को {{$group->interest_rate}} प्रतिशक(घटता हुआ बकाया विधि) प्रति वर्ष की दर पर ब्याजसहित महालक्ष्मी माइक्रो फाइनेंस  अथवा आदेशनुसार को अदा करने की वचनदेती/देता है| भुगतान प्रस्तुति और नोट की नोटीग और प्रतिवाद को इसके द्वारा बिना शर्ते माफ़ किया जाता है|
         </p>
         <p class="h-font fs-12">
@@ -255,7 +260,7 @@
 
             <li>ऋण की प्राप्तता एम एफ आइ या अन्य किसी कंपनी द्वारा दिए जाने वाले उत्पाद या सेवा से जुड़ी नहीं है|   </li>                             
 
-            <li>सामान्य रूप से वितरण 1 महीने के भीतर किया जायेगा | लेकिन यह विभिन्न परिस्थितियों पर करता है जैसे(A)बाजार की स्तिथि (b) ग्राहक का उधारी इतिहास (c) कंपनी की वित्तीय स्थिति (d) अन्य पर्यावरणिक कारनउपर दिये गये बिन्दुओं की वजह से ऋण किसी भी समय रद किया जा सकता है।    </li>                                                                                                                                               
+            <li>सामान्य रूप से वितरण 1 महीने के भीतर किया जायेगा | लेकिन यह विभिन्न परिस्थितियों पर करता है जैसे(A)बाजार की स्तिथि (b) ग्राहक का उधारी इतिहास (c) कंपनी की वित्तीय स्थिति (d) अन्य पर्यावरणिक कारनउपर दिये गये बिन्दुओं की वजह से ऋण किसी भी समय रद किया जा सकता है।    </li>                                                                                                                                            
             <li>हर कर्ज पर एक क़िस्त के मॉरटॉरीअम की सुविधा होगी |  </li>                                          
 
             <li>महालक्ष्मी  माइक्रो फाइनेंस  पारदर्शिता और निष्पन्न उधार प्रथाओं के लिए के लिए प्रतिबद्ध है| </li>                                                                        
@@ -270,7 +275,7 @@
             </li>                                                                                                                                  
             <li>महालक्ष्मी  माइक्रो फाइनेंस का उद्देश्य लोगो को गरीबी से उभारना व समाज  समानता लाना है|</li> 
         </ol>
-        <p class="h-font" style="margin-top:45px; text-align: right;">
+        <p class="h-font fs-12" style="margin-top:45px; text-align: right;">
             ऋणकर्ता के हस्ताक्षर
         </p>
     </div>

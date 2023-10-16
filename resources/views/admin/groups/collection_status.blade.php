@@ -11,12 +11,13 @@
         <div class="col-md-6">
             <h1 class="h3 mb-2 text-gray-800">
                 <span ng-if="group_id > 0">@{{groups_details[0].group_name}} - @{{groups_details[0].village_name}}</span>
-                <span ng-if="group_id == 0">Groups Collection Status </span>
+                <span ng-if="group_id == 0">Groups Collection Status</span>
             </h1>
         </div>
         <div class="col-md-6 text-right">
-            <a href="{{url('admin/groups/add-collection/'.$group_id)}}" class="btn btn-primary">Add Collection</a>
-            <a href="{{url('admin/groups')}}" class="btn btn-info">Back</a>
+            <a href="{{url('admin/groups/print-collection-view')}}" class="btn btn-sm btn-warning">Print Demand</a>
+            <a href="{{url('admin/groups/add-collection/'.$group_id)}}" class="btn btn-sm btn-primary">Add Collection</a>
+            <a href="{{url('admin/groups')}}" class="btn btn-sm btn-info">Back</a>
         </div>
     </div>    
     <table class="table table-bordered table-hover table-striped">

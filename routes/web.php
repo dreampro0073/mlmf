@@ -67,6 +67,8 @@ Route::group(['prefix'=>"admin"], function(){
 		Route::get('/c-loan-card/{group_id}/{customer_id}',[GroupsController::class,'cLoanCard']);
 		Route::get('/print-loan-card/{group_id}/{customer_id}',[GroupsController::class,'printLoanCard']);
 		Route::get('/shapat-patra/{group_id}/{customer_id}',[GroupsController::class,'shapatPatra']);
+		Route::get('/print-collection-view',[GroupsController::class,'printTodayCollectionInit']);
+
 
 	
 
