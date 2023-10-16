@@ -159,21 +159,22 @@ class GroupsController extends Controller {
 		$group_dates = DB::table('group_emi_dates')->select('group_emi_dates.id as group_emi_date_id','group_emi_dates.group_id','group_emi_dates.emi_date','groups.group_name','villages.village_name','group_emi_dates.emi_amount')->leftjoin('groups','groups.id','=','group_emi_dates.group_id')->leftjoin('villages','villages.id','=','groups.village_id')->where('group_emi_dates.emi_date','=',date("Y-m-d"))->get();
 
 		$total_amount = 0;
+
 		foreach ($group_dates as $key => $group_date) {
 			$group_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no')->leftjoin('customers','customers.id','=','group_customers.customer_id')->where('group_customers.group_id','=',$group_date->group_id)->get();
 
 			$group_date->group_customers = $group_customers;
 
-			$total_amount = sizeof($group_customers)*$group_date->emi_amount;
+			$total_amount += sizeof($group_customers)*$group_date->emi_amount;
 		}
 
+		// dd($total_amount);
 		$options = new Options();
 		$options->set('isRemoteEnabled', true);
 
 		$dompdf = new Dompdf($options);
 
 		define("DOMPDF_UNICODE_ENABLED", true);
-
 		
 		$html = view('admin.groups.print_today_target',compact('group_dates','total_amount'));
 

@@ -61,6 +61,13 @@
     </style>
 </head>
 <body>
+    <div class="row personal-bio">
+        <div style="text-align:center;">
+            <img src="{{url('assets/img/logo.png')}}" style="height:60px;width:auto;"> &nbsp;&nbsp;
+        </div>
+       
+    </div>
+    <h4 style="margin:15px 0;">Date : <?php echo date("d-m-Y",strtotime("now")); ?></h4>
     <table cellpadding="3" cellspacing="0" border="1" style="width:100%">
         <thead>
             <tr>
@@ -93,7 +100,7 @@
                     </tr>
                 @endforeach
             @endforeach
-             <tr>
+            <tr>
                 <th colspan="3">Total</th>
                 <th colspan="1">{{$total_amount}}</th>
             </tr>
