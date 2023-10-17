@@ -73,6 +73,7 @@
             <tr>
                 <th>Sn</th>
                 <th>Customer</th>
+                <th>Mobile</th>
                 <th>Aadhar</th>
                 <th>EMI Amount</th>
             </tr>
@@ -80,7 +81,7 @@
         <tbody>
             @foreach($group_dates as  $group_date)
                 <tr>
-                    <th colspan="4">{{$group_date->group_name}}</th>
+                    <th colspan="5">Group {{$group_date->group_name}}</th>
                 </tr>
                 @foreach($group_date->group_customers as $key => $customer)
                     <tr>
@@ -89,6 +90,9 @@
                         </td>
                         <td>
                             {{$customer->name}}
+                        </td>
+                         <td>
+                            {{$customer->mobile}}
                         </td>
                         <td>
                             {{$customer->aadhaar_no}}
@@ -101,7 +105,7 @@
                 @endforeach
             @endforeach
             <tr>
-                <th colspan="3">Total</th>
+                <th colspan="4">Total</th>
                 <th colspan="1">{{$total_amount}}</th>
             </tr>
         </tbody>

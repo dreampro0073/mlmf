@@ -96,6 +96,8 @@
                                 <th>EMI</th>
                                 <th>Signature</th>   
                                 <th>LIR No.</th>   
+                                <th>Penality</th>   
+                                <th>Remarks.</th>   
                             </tr>
                         </thead>
                         <tbody>
@@ -110,7 +112,9 @@
                                 <td>@{{item.emi_amount}}</td>
 
                                 <td></td>   
-                                <td></td>   
+                                <td></td>  
+                                <td>@{{item.penalty}}</td>   
+                                <td>@{{item.remark}}</td>   
                             </tr>
                             <tr>
                                 <td>Total</td>
@@ -119,6 +123,8 @@
                                 <td>@{{group.total_int_amount}}</td>
                                 <td></td>
                                 <td>@{{group.total_amount}}</td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>

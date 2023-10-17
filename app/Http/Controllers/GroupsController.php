@@ -138,7 +138,7 @@ class GroupsController extends Controller {
 
 		$total_amount = 0;
 		foreach ($group_dates as $key => $group_date) {
-			$group_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no')->leftjoin('customers','customers.id','=','group_customers.customer_id')->where('group_customers.group_id','=',$group_date->group_id)->get();
+			$group_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','customers.mobile')->leftjoin('customers','customers.id','=','group_customers.customer_id')->where('group_customers.group_id','=',$group_date->group_id)->get();
 
 			$group_date->group_customers = $group_customers;
 
@@ -161,7 +161,7 @@ class GroupsController extends Controller {
 		$total_amount = 0;
 
 		foreach ($group_dates as $key => $group_date) {
-			$group_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no')->leftjoin('customers','customers.id','=','group_customers.customer_id')->where('group_customers.group_id','=',$group_date->group_id)->get();
+			$group_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','customers.mobile')->leftjoin('customers','customers.id','=','group_customers.customer_id')->where('group_customers.group_id','=',$group_date->group_id)->get();
 
 			$group_date->group_customers = $group_customers;
 
@@ -676,13 +676,13 @@ class GroupsController extends Controller {
 
 
 			foreach ($group_dates as $group_date) {
-                $check = DB::table('emi_collection')->where('group_id',$group_id)->where('customer_id',$customer_id)->where('group_emi_date_id',$group_date->id)->where('collected_amount',1)->first();
+                $check = DB::table('emi_collection')->where('group_id',$group_id)->where('customer_id',$customer_id)->where('group_emi_date_id',$group_date->id)->first();
 
                 // dd($check);
                	$group_date->emi_collected = false;
 
                	$group_date->ad_cl= "f_paid";
-                if($check){
+                if($check->collected_amount == 1){
 
                		$group_date->ad_cl= "paid";
 
@@ -695,6 +695,8 @@ class GroupsController extends Controller {
                 $group_date->emi_date = date("d/m/Y",strtotime($group_date->emi_date));
                 $group_date->interest_payment = round($group_date->interest_payment,0);
                 $group_date->emi_amount = round($group_date->emi_amount,0);
+                $group_date->penalty = $check->penalty;
+                $group_date->remark = $check->remark;
 
                 $total_amount += $group_date->emi_amount;
                 $total_int_amount += $group_date->interest_payment;

@@ -25,6 +25,7 @@
             <tr>
                 <th>Sn</th>
                 <th>Customer</th>
+                <th>Mobile</th>
                 <th>Aadhar</th>
                
                 <th>EMI Amount</th>
@@ -42,6 +43,9 @@
                     <a href="{{url('admin/clients/details/')}}/@{{customer.id}}" target="_blank">
                         @{{customer.name}}
                     </a>
+                </td>
+                 <td>
+                    @{{customer.mobile}}
                 </td>
                 <td>
                     @{{customer.aadhaar_no}}
