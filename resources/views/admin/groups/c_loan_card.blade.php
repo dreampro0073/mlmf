@@ -113,7 +113,7 @@
 
                                 <td></td>   
                                 <td></td>  
-                                <td>@{{item.penalty}}</td>   
+                                <td>@{{item.penalty_amount}}</td>   
                                 <td>@{{item.remark}}</td>   
                             </tr>
                             <tr>
