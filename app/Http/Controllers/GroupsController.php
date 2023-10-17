@@ -602,7 +602,7 @@ class GroupsController extends Controller {
 	public function paidEMI(Request $request){
 		DB::table("emi_collection")->where('id', $request->emi_collection_id)->update([
 			'remark'=>$request->remark,
-			'penalty'=>$request->penalty,
+			'penalty_amount'=>$request->penalty_amount,
 			'collected_amount'=>$request->collected_amount,
 		]);
 
@@ -685,6 +685,8 @@ class GroupsController extends Controller {
                 if($check->collected_amount == 1){
 
                		$group_date->ad_cl= "paid";
+               		$group_date->emi_collected = true;
+
 
                 }
 
@@ -695,7 +697,7 @@ class GroupsController extends Controller {
                 $group_date->emi_date = date("d/m/Y",strtotime($group_date->emi_date));
                 $group_date->interest_payment = round($group_date->interest_payment,0);
                 $group_date->emi_amount = round($group_date->emi_amount,0);
-                $group_date->penalty = $check->penalty;
+                $group_date->penalty_amount = $check->penalty_amount;
                 $group_date->remark = $check->remark;
 
                 $total_amount += $group_date->emi_amount;
