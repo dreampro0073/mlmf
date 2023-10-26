@@ -91,5 +91,41 @@
         </div>
 
    	</div>
+    <div class="main" ng-controller="dashCtrl" ng-init="dashInit()">
+        <div ng-if="pending_list.length > 0">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Client Name</th>
+                        <th>Group Name</th>
+                        <th>EMI Date</th>
+                        <th>EMI Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in pending_list" style="color: red;">
+                        <td>@{{ $index+1}}</td>
+                        <td>@{{item.customer_name}} /
+                            <span style="display:font-size: 12px;">@{{item.mobile}}</span>
+                        </td>
+                        <td>@{{item.group_name}}</td>
+                        <td>@{{item.emi_date|date:'dd-MM-yyyy'}}</td>
+                        <td>@{{item.emi_amount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
+@endsection
+
+
+@section('footer_scripts')
+    <?php $version = "0.0.3"; ?>
+        
+    <script type="text/javascript" src="{{url('assets/scripts/core/client_ctrl.js?v='.$version)}}" ></script>
+
+    
 @endsection

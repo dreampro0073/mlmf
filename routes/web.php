@@ -88,6 +88,10 @@ Route::group(['prefix'=>"api"], function(){
 		Route::post('/view-plan',[PlanController::class,'viewPlan']);
 
 	});
+	
+	Route::group(['prefix'=>"dashboard"], function(){
+		Route::post('/pending-list',[AdminController::class,'pendingList']);
+	});
 
 	Route::group(['prefix'=>"clients"], function(){
 		Route::post('/init',[ClientsController::class,'clientInit']);

@@ -126,7 +126,17 @@ class AdminController extends Controller {
         return Response::json($data, 200, array());
     }
 
-	
+	public function pendingList(){
+
+        $toDay = date('Y-m-d');
+       
+        $pending_list = DB::table('emi_collection')->select('customers.name as customer_name', 'customers.mobile','group_emi_dates.emi_date','groups.group_name','emi_collection.id as emi_collection_id','group_emi_dates.emi_amount')->leftJoin('customers','customers.id','=','emi_collection.customer_id')->leftJoin('group_emi_dates','group_emi_dates.id','emi_collection.group_emi_date_id')->leftJoin('groups','groups.id','=','emi_collection.group_id')->where('group_emi_dates.emi_date','<',$toDay)->whereNull('collected_amount')->get();
+
+
+        $data["success"] = true;
+        $data["pending_list"] = $pending_list;
+        return Response::json($data, 200, array()); 
+    }
   
 
 }

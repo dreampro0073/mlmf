@@ -178,3 +178,21 @@ app.controller('clientsCtrl', function($scope , $http, $timeout , DBService, Upl
 
 
 })
+
+app.controller('dashCtrl', function($scope , $http, $timeout , DBService, Upload) {
+    
+    $scope.pending_list = [];
+
+    $scope.dashInit = function(){
+        DBService.postCall({ client_id:$scope.client_id}, '/api/dashboard/pending-list').then((data) => {
+            if (data.success) {
+                $scope.pending_list = data.pending_list;
+            }
+        });
+    }
+
+
+
+
+
+})

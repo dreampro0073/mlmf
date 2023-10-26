@@ -417,13 +417,13 @@ class GroupsController extends Controller {
 		                $f2_mon= date("m",strtotime("+1 month".$s_date2));
 		            }
 
-		            if(strtotime($s_date1) - strtotime($active_date) >= '1296000' && $i < $plan->no_of_emis ){
+		            if(strtotime($s_date1) - strtotime($active_date) >= '567000' && $i < $plan->no_of_emis ){
 		            	$dates[] = $s_date1;
 
 		            	$i++;
 		            }		            
 
-		            if(strtotime($s_date2) - strtotime($active_date) >= '1296000' && $i < $plan->no_of_emis ){
+		            if(strtotime($s_date2) - strtotime($active_date) >= '567000' && $i < $plan->no_of_emis ){
 		            	$dates[] = $s_date2;
 		            	$i++;
 
@@ -441,7 +441,7 @@ class GroupsController extends Controller {
 
 		            $s_date = date('Y-m-d',strtotime($s_date));
 
-		            if(strtotime($s_date) - strtotime($active_date) >= '648000' && $i < $plan->no_of_emis ){
+		            if(strtotime($s_date) - strtotime($active_date) >= '567000' && $i < $plan->no_of_emis ){
 		            	$dates[] = $s_date;
 
 		            	$i++;
