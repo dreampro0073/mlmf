@@ -125,13 +125,12 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService) {
     }
     $scope.storeGroup = function () {
         $scope.loading = true;
-        // console.log($scope.formData);return;
         DBService.postCall($scope.formData, '/old-groups/store').then((data) => {
             alert(data.message);
             
             if(data.success){
-                window.location = data.redirect_url;
                 $scope.actvateGroup(data.group_id);
+                $scope.location = data.redirect_url;
             }   
         });
         $scope.loading = false;
@@ -168,10 +167,9 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService) {
     $scope.actvateGroup = function(group_id) {
 
         $scope.active_loading = true;
-
         
         DBService.postCall({ group_id:group_id}, '/old-groups/activate-group').then((data) => {
- 
+            window.location = $scope.location;
         });
     }
 
