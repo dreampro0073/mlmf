@@ -139,12 +139,7 @@ class AdminController extends Controller {
 	public function pendingList(){
 
         $toDay = date('Y-m-d');
-       
-        // $pending_list = DB::table('emi_collection')->select('customers.name as customer_name', 'customers.mobile','group_emi_dates.emi_date','groups.group_name','emi_collection.id as emi_collection_id','group_emi_dates.emi_amount')->leftJoin('customers','customers.id','=','emi_collection.customer_id')->leftJoin('group_emi_dates','group_emi_dates.id','=','emi_collection.group_emi_date_id')->leftJoin('groups','groups.id','=','emi_collection.group_id')->where('group_emi_dates.emi_date','<',$toDay)->get();
 
-        // $pending_list = DB::table('emi_collection')->select('emi_collection.*')->leftJoin('group_emi_dates','emi_collection.group_emi_date_id','=','group_emi_dates.id')->get();
-
-        // dd($pending_list);
 
         $pending_list = DB::table('group_emi_dates')->select('group_emi_dates.emi_date','group_emi_dates.emi_amount','groups.group_name','emi_collection.id as emi_collection_id','customers.name as customer_name','customers.mobile','emi_collection.group_id')->leftjoin('groups','groups.id','=','group_emi_dates.group_id')->leftjoin('emi_collection','emi_collection.group_emi_date_id','=','group_emi_dates.id')->leftjoin('customers','customers.id','=','emi_collection.customer_id')->where('group_emi_dates.emi_date','<',$toDay)->where('groups.active',1)->whereNull('emi_collection.collected_amount')->get();
 
