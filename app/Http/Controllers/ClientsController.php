@@ -51,6 +51,47 @@ class ClientsController extends Controller {
             'client_id' => $client_id,
         ]);
 	}
+	
+	public function historyDetails($enc_id = 0){
+		if($enc_id !== 0 && $enc_id !== ''){
+			$client_id = Customer::getCustomerId($enc_id);
+		} else {
+			$client_id = $enc_id;
+		}
+
+		$client = DB::table('customers')->select('customers.name','customers.id', 'customer_documents.customer_photo')
+		->leftjoin('customer_documents', 'customer_documents.customer_id', '=', 'customers.id')
+		->where('customers.id', $client_id)
+		->first();
+
+		$groups = DB::table('group_customers')->select('group_customers.group_id','group_customers.id','groups.group_name','group_customers.closed')->leftJoin('groups','groups.id','=','group_customers.group_id')->where('group_customers.customer_id', $client_id)->get();
+
+		foreach ($groups as $group) {
+			$group_emi_dates = DB::table('group_emi_dates')->select('group_emi_dates.emi_date','group_emi_dates.emi_amount','emi_collection.collected_amount')->leftjoin('emi_collection', 'emi_collection.group_emi_date_id', 'group_emi_dates.id')->where('emi_collection.customer_id', $client_id)->where('group_emi_dates.emi_date','<',date("Y-m-d"))->where('group_emi_dates.group_id', $group->group_id)->get();
+
+			foreach ($group_emi_dates as $key => $item) {
+				$item->emi_status = 'Not Paid';
+
+				if($item->collected_amount == 1){
+					$item->emi_status = 'Paid';
+
+				}
+			}
+
+			$group->group_emi_dates = $group_emi_dates;
+		}
+
+		// dd($groups);
+
+		return view('admin.clients.history_details', [
+            "sidebar" => "clients",
+            "subsidebar" => "clients",
+            'client_id' => $client_id,
+            'client' => $client,
+            'groups' => $groups,
+            'enc_id'=>$enc_id
+        ]);
+	}
 
 
 	public function clientInit(Request $request){

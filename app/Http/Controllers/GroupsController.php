@@ -99,8 +99,6 @@ class GroupsController extends Controller {
 
 			$group_customers1  = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','group_customers.customer_id')->leftjoin('customers','group_customers.customer_id','=','customers.id')->where('group_customers.group_id',$group->id)->get();
 
-
-
 			if(sizeof($group_customers1) > 0){
 				foreach ($group_customers1 as $key => $group_customer) {
 					if(sizeof($group_dates) > 0){
@@ -168,7 +166,6 @@ class GroupsController extends Controller {
 			$total_amount += sizeof($group_customers)*$group_date->emi_amount;
 		}
 
-		// dd($total_amount);
 		$options = new Options();
 		$options->set('isRemoteEnabled', true);
 
@@ -685,8 +682,6 @@ class GroupsController extends Controller {
 
 		$customer = DB::table('customers')->select('customers.name','customers.father_husband_name','customers.email','customers.mobile','customer_guarantor.name as guarantor_name','customer_guarantor.mobile as guarantor_mobile','customer_documents.customer_photo','customer_documents.joint_photo','customers.unique_id')->leftJoin('customer_documents','customer_documents.customer_id','=','customers.id')->leftJoin('customer_guarantor','customer_guarantor.customer_id','=','customers.id')->where('customers.id','=',$customer_id)->first();
 
-		// dd($customer);
-
 		$group_id = $request->group_id;
 
 		$total_amount =0;
@@ -699,7 +694,6 @@ class GroupsController extends Controller {
 			foreach ($group_dates as $group_date) {
                 $check = DB::table('emi_collection')->where('group_id',$group_id)->where('customer_id',$customer_id)->where('group_emi_date_id',$group_date->id)->first();
 
-                // dd($check);
                	$group_date->emi_collected = false;
 
                	$group_date->ad_cl= "f_paid";
@@ -707,7 +701,6 @@ class GroupsController extends Controller {
 
                		$group_date->ad_cl= "paid";
                		$group_date->emi_collected = true;
-
 
                 }
 
@@ -748,10 +741,7 @@ class GroupsController extends Controller {
 
 		$dompdf = new Dompdf($options);
 
-
 		$group = DB::table('groups')->select('groups.*','villages.village_name','plans.principal_amount','plans.interest_rate','plans.no_of_emis','plans.time_line')->leftJoin('villages','villages.id','=','groups.village_id')->leftJoin('plans','plans.id','=','groups.plan_id')->where('groups.id', $group_id)->first();
-
-		// dd($group);
 
 		$customer = DB::table('customers')->select('customers.name','customers.father_husband_name','customers.unique_id','customers.email','customers.mobile','customer_guarantor.name as guarantor_name','customer_guarantor.mobile as guarantor_mobile','customer_guarantor.photo as guarantor_photo','customer_documents.customer_photo','group_customers.id as group_customer_id','customer_documents.joint_photo','customers.unique_id')->leftJoin('customer_documents','customer_documents.customer_id','=','customers.id')->leftJoin('customer_guarantor','customer_guarantor.customer_id','=','customers.id')->leftJoin('group_customers','group_customers.customer_id','=','customers.id')->where('customers.id','=',$customer_id)->where('group_customers.group_id',$group_id)->first();
 
@@ -762,7 +752,6 @@ class GroupsController extends Controller {
 		if($group){
 			$group_dates = DB::table('group_emi_dates')->where('group_id',$group->id)->get();
 
-
 			foreach ($group_dates as $group_date) {
                 $check = DB::table('emi_collection')->where('group_id',$group_id)->where('customer_id',$customer_id)->where('group_emi_date_id',$group_date->id)->where('collected_amount',1)->first();
 
@@ -772,16 +761,12 @@ class GroupsController extends Controller {
                 $total_amount += $group_date->emi_amount;
                 $total_int_amount += $group_date->interest_payment;
 
-                
-
-                // dd($check);
                	$group_date->emi_collected = false;
 
                	$group_date->ad_cl= "f_paid";
                 if($check){
 
                		$group_date->ad_cl= "paid";
-
                 }
 
                 if($group_date->emi_date < date("Y-m-d") && !$check){
@@ -799,8 +784,6 @@ class GroupsController extends Controller {
 
 		$total_amount = round($total_amount,0);
 		$total_int_amount = round($total_int_amount,0);
-
-		// return view('admin.groups.c_loan_card_print',compact('group','customer','total_amount','total_int_amount'));
 		$html = view('admin.groups.c_loan_card_print',compact('group','customer','total_amount','total_int_amount'));
 
 		$dompdf->loadHtml($html);
@@ -824,9 +807,7 @@ class GroupsController extends Controller {
 
 		$dompdf = new Dompdf($options);
 
-
 		$group = DB::table('groups')->select('groups.*','villages.village_name','plans.principal_amount','plans.interest_rate','plans.no_of_emis','plans.time_line','blocks.block_name','emi_types.type_name')->leftJoin('villages','villages.id','=','groups.village_id')->leftJoin('plans','plans.id','=','groups.plan_id')->leftJoin('emi_types','emi_types.id','=','plans.emi_type')->leftJoin('blocks','blocks.id','=','groups.block_id')->where('groups.id', $group_id)->first();
-
 		
 		$customer = DB::table('customers')->select('customers.name','customers.father_husband_name','customers.email','customers.mobile','customers.aadhaar_no','customers.pan_no','customers.voter_id_no','customers.dob','customer_guarantor.name as guarantor_name','customer_guarantor.mobile as guarantor_mobile','customer_guarantor.photo as guarantor_photo','customer_guarantor.aadhaar_no as guarantor_aadhaar_no','customer_guarantor.pan_no as guarantor_pan_no','customer_documents.customer_photo','group_customers.id as group_customer_id','b1.bank_name as c_bank_name','customers.ac_no','customers.ifsc_code','b2.bank_name as guarantor_bank_name','customer_guarantor.ifsc_code as guarantor_ifsc_code','customer_guarantor.ac_no as guarantor_ac_no','customer_guarantor.voter_id_no as guarantor_voter_id_no','group_customers.purpose','customer_documents.joint_photo','customers.unique_id')->leftJoin('customer_documents','customer_documents.customer_id','=','customers.id')->leftJoin('customer_guarantor','customer_guarantor.customer_id','=','customers.id')->leftJoin('group_customers','group_customers.customer_id','=','customers.id')->leftJoin('banks as b1','b1.id','=','customers.bank_id')->leftJoin('banks as b2','b2.id','=','customer_guarantor.bank_id')->where('customers.id','=',$customer_id)->where('group_customers.group_id',$group_id)->first();
 		$total_amount =0;
@@ -842,8 +823,6 @@ class GroupsController extends Controller {
 
                 $total_amount += $group_date->emi_amount;
                 $total_int_amount += $group_date->interest_payment;
-
-                // dd($check);
                	$group_date->emi_collected = false;
 
                	$group_date->ad_cl= "f_paid";
@@ -874,7 +853,6 @@ class GroupsController extends Controller {
 		$dompdf->loadHtml($html);
 		$dompdf->setPaper('A4',);
 		$dompdf->render();
-		// $dompdf->stream();
 
 		$dompdf->stream('sapat'.$customer->unique_id."-".$customer->name.'.pdf');
 
@@ -925,6 +903,14 @@ class GroupsController extends Controller {
 		$data['message'] = 'Successfully Updated!';
 
  		return Response::json($data,200,[]);
+	}
+
+	public function closeGroup($id,$enc_id){
+		DB::table('group_customers')->where('id', $id)->update(['closed'=> 1]);
+		$group = DB::table('group_customers')->where('id', $id)->first();
+
+		DB::table('emi_collection')->where('group_id', $group->group_id)->where('customer_id', $group->customer_id)->update(['collected_amount'=>1]);
+		return Redirect::to('admin/clients/history/'.$enc_id);
 	}
 }
 

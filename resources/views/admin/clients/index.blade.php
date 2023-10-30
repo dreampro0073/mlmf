@@ -46,6 +46,7 @@
                             <td>
                                 <a href="{{url('admin/clients/details/'.$item->enc_id)}}" class="btn btn-info btn-sm">View</a> 
                                 <a href="{{url('admin/clients/add/'.$item->enc_id)}}" class="btn btn-primary btn-sm">Edit</a> 
+                                <a href="{{url('admin/clients/history/'.$item->enc_id)}}" class="btn btn-warning btn-sm">History</a> 
                                <a href="{{url('admin/clients/delete/'.$item->enc_id)}}" onclick="return confirm('Are you sure to Delete?');" class="btn btn-danger btn-sm">Delete</a> 
                             </td>
                         </tr>

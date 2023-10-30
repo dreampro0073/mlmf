@@ -100,5 +100,10 @@ ALTER TABLE `groups` ADD `insurance_fee` VARCHAR(20) NULL DEFAULT NULL AFTER `pi
 // Devendra 11Oct2023
 ALTER TABLE `emi_collection` ADD `penalty_amount` VARCHAR(20) NULL DEFAULT NULL AFTER `collected_amount`, ADD `remark` TEXT NULL DEFAULT NULL AFTER `penalty_amount`;
 
+// Devendra 30ct2023
+
+
+ALTER TABLE `group_customers` ADD `closed` TINYINT NOT NULL DEFAULT '0' AFTER `status`;
+
 
 ?>

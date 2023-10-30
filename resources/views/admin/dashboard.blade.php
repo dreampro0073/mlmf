@@ -33,20 +33,6 @@
             </a>    
         </div>
         
-       <!--  <div class="col-md-3">
-            <a class="no-dec" href="{{url('/')}}">
-                <div class="card p-3 shadow mb-4 ">
-                    <p class="fs-30">Pending</p>
-                    <p>
-                        
-                    </p>
-                    <div class="icon">
-                        <i class="fas fa-university"></i>
-                    </div>
-                </div>
-            </a>    
-        </div> -->
-        
         <div class="col-md-3">
             <a class="no-dec" href="{{url('admin/groups')}}">
                 <div class="card p-3 shadow mb-4 ">
@@ -106,10 +92,10 @@
                 <tbody>
                     <tr ng-repeat="item in pending_list" style="color: red;">
                         <td>@{{ $index+1}}</td>
-                        <td>@{{item.customer_name}} /
-                            <span style="display:font-size: 12px;">@{{item.mobile}}</span>
+                        <td><a href="{{url('admin/clients/details/')}}/@{{item.enc_id}}" target="_blank">@{{item.customer_name}} /
+                            <span style="display:font-size: 12px;">@{{item.mobile}}</span> </a>
                         </td>
-                        <td>@{{item.group_name}}</td>
+                        <td><a href="{{url('admin/groups/view/')}}/@{{item.group_id}}" target="_blank">@{{item.group_name}}</a></td>
                         <td>@{{item.emi_date|date:'dd-MM-yyyy'}}</td>
                         <td>@{{item.emi_amount}}</td>
                     </tr>

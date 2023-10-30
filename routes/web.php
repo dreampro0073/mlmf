@@ -52,6 +52,7 @@ Route::group(['prefix'=>"admin"], function(){
 		Route::get('/',[ClientsController::class,'index']);
 		Route::get('/add/{client_id?}',[ClientsController::class,'addClient']);
 		Route::get('/details/{client_id?}',[ClientsController::class,'clientDetails']);
+		Route::get('/history/{client_id?}',[ClientsController::class,'historyDetails']);
 		Route::get('/delete/{client_id}',[ClientsController::class,'deleteClient']);
 	});
 
@@ -68,6 +69,7 @@ Route::group(['prefix'=>"admin"], function(){
 		Route::get('/print-loan-card/{group_id}/{customer_id}',[GroupsController::class,'printLoanCard']);
 		Route::get('/shapat-patra/{group_id}/{customer_id}',[GroupsController::class,'shapatPatra']);
 		Route::get('/print-collection-view',[GroupsController::class,'printTodayCollectionInit']);
+		Route::get('/close-group/{id}/{enc_id}',[GroupsController::class,'closeGroup']);
 
 
 	

@@ -23,6 +23,7 @@
         </div>
         <div class="col-md-6 text-right">
             <a href="{{url('admin/clients/add/')}}/@{{client.enc_id}}" class="btn btn-primary btn-sm">Edit</a> 
+            <a href="{{url('admin/clients/history/')}}/@{{client.enc_id}}" class="btn btn-warning btn-sm">History</a> 
         </div>
     </div>
     <hr>
