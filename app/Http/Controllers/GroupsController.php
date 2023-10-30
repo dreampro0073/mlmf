@@ -214,7 +214,7 @@ class GroupsController extends Controller {
 					$is_enabled = false;
 					$is_checked = false;
 
-					if($check_entry->collected_amount){
+					if($check_entry->collected_amount == 1){
 						$emi_collected = true;	
 					}
 

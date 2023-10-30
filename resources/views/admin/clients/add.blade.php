@@ -292,7 +292,7 @@
                                                           
                 </div>
                 <div class="pt-4">
-                   <button type="submit" class="btn btn-primary" ng-disabled="loading">
+                    <button type="submit" class="btn btn-primary" ng-disabled="loading">
                         <span ng-if="!loading">Submit</span>
                         <span ng-if="loading" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     </button> 

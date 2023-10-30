@@ -45,13 +45,13 @@
                             <td>{{ $item->no_of_emis}}</td>
                             <td>{{ $item->type_name}}</td>
                             <td>
+                                <a ng-click="viewPlan({{$item->id}})" class="btn btn-primary btn-sm">View</a> 
                                 @if($item->editable)
                                 <a href="{{url('admin/plans/add/'.$item->id)}}" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="{{url('admin/plans/delete/'.$item->id)}}" onclick="return confirm('Are you sure to Delete?');" class="btn btn-danger btn-sm">Delete</a> 
                                 @endif 
 
-                                <a ng-click="viewPlan({{$item->id}})" class="btn btn-primary btn-sm">View</a> 
                                 
-                                <a href="{{url('admin/plans/delete/'.$item->id)}}" onclick="return confirm('Are you sure to Delete?');" class="btn btn-danger btn-sm">Delete</a> 
                             </td>
                         </tr>
                         @endforeach
