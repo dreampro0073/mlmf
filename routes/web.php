@@ -36,46 +36,49 @@ Route::get('/logout',function(){
 
 Route::get('emi-calc',[AdminController::class,'test']);
 
-Route::group(['prefix'=>"admin"], function(){
-	Route::get('/dashboard',[AdminController::class,'dashboard']);
-	Route::post('/uploadFile',[AdminController::class,'uploadFile']);
-	
+Route::group(['middleware'=>'auth'],function(){
+	Route::group(['prefix'=>"admin"], function(){
+		Route::get('/dashboard',[AdminController::class,'dashboard']);
+		Route::post('/uploadFile',[AdminController::class,'uploadFile']);
+		Route::get('/group-delete/{group_id}', [AdminController::class,'deleteGroup']);
+
+		Route::group(['prefix'=>"plans"], function(){
+			Route::get('/',[PlanController::class,'index']);
+			Route::get('/test',[PlanController::class,'index']);
+			Route::get('/add/{plan_id?}',[PlanController::class,'addPlan']);
+			Route::get('/delete/{plan_id}',[PlanController::class,'deletePlan']);
+		});
+		Route::group(['prefix'=>"clients"], function(){
+			Route::get('/',[ClientsController::class,'index']);
+			Route::get('/add/{client_id?}',[ClientsController::class,'addClient']);
+			Route::get('/details/{client_id?}',[ClientsController::class,'clientDetails']);
+			Route::get('/history/{client_id?}',[ClientsController::class,'historyDetails']);
+			Route::get('/delete/{client_id}',[ClientsController::class,'deleteClient']);
+		});
+
+		Route::group(['prefix'=>"groups"], function(){
+			Route::get('/',[GroupsController::class,'index']);
+			Route::get('/add/{group_id?}',[GroupsController::class,'addGroup']);
+			Route::get('/view/{group_id}',[GroupsController::class,'viewGroup']);
+			Route::get('/today/collection/{group_id?}',[GroupsController::class,'todayCollection']);
+			Route::get('/add-collection/{group_id?}',[GroupsController::class,'addCollection']);
+			Route::get('/delete/{group_id}',[GroupsController::class,'deleteGroup']);
+			Route::get('/emi-status/{group_id}',[GroupsController::class,'emiStatus']);
+			Route::get('/loan-card/{id}',[GroupsController::class,'loanCard']);
+			Route::get('/c-loan-card/{group_id}/{customer_id}',[GroupsController::class,'cLoanCard']);
+			Route::get('/print-loan-card/{group_id}/{customer_id}',[GroupsController::class,'printLoanCard']);
+			Route::get('/shapat-patra/{group_id}/{customer_id}',[GroupsController::class,'shapatPatra']);
+			Route::get('/print-collection-view',[GroupsController::class,'printTodayCollectionInit']);
+			Route::get('/close-group/{id}/{enc_id}',[GroupsController::class,'closeGroup']);
 
 
-	Route::group(['prefix'=>"plans"], function(){
-		Route::get('/',[PlanController::class,'index']);
-		Route::get('/test',[PlanController::class,'index']);
-		Route::get('/add/{plan_id?}',[PlanController::class,'addPlan']);
-		Route::get('/delete/{plan_id}',[PlanController::class,'deletePlan']);
-	});
-	Route::group(['prefix'=>"clients"], function(){
-		Route::get('/',[ClientsController::class,'index']);
-		Route::get('/add/{client_id?}',[ClientsController::class,'addClient']);
-		Route::get('/details/{client_id?}',[ClientsController::class,'clientDetails']);
-		Route::get('/history/{client_id?}',[ClientsController::class,'historyDetails']);
-		Route::get('/delete/{client_id}',[ClientsController::class,'deleteClient']);
-	});
+		
 
-	Route::group(['prefix'=>"groups"], function(){
-		Route::get('/',[GroupsController::class,'index']);
-		Route::get('/add/{group_id?}',[GroupsController::class,'addGroup']);
-		Route::get('/view/{group_id}',[GroupsController::class,'viewGroup']);
-		Route::get('/today/collection/{group_id?}',[GroupsController::class,'todayCollection']);
-		Route::get('/add-collection/{group_id?}',[GroupsController::class,'addCollection']);
-		Route::get('/delete/{group_id}',[GroupsController::class,'deleteGroup']);
-		Route::get('/emi-status/{group_id}',[GroupsController::class,'emiStatus']);
-		Route::get('/loan-card/{id}',[GroupsController::class,'loanCard']);
-		Route::get('/c-loan-card/{group_id}/{customer_id}',[GroupsController::class,'cLoanCard']);
-		Route::get('/print-loan-card/{group_id}/{customer_id}',[GroupsController::class,'printLoanCard']);
-		Route::get('/shapat-patra/{group_id}/{customer_id}',[GroupsController::class,'shapatPatra']);
-		Route::get('/print-collection-view',[GroupsController::class,'printTodayCollectionInit']);
-		Route::get('/close-group/{id}/{enc_id}',[GroupsController::class,'closeGroup']);
-
-
-	
-
+		});
 	});
 });
+
+
 
 Route::group(['prefix'=>"api"], function(){
 	Route::post('/districts',[ClientsController::class,'getDistricts']);

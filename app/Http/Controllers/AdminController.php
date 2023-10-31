@@ -115,6 +115,15 @@ class AdminController extends Controller {
         $data["pending_list"] = $pending_list;
         return Response::json($data, 200, array()); 
     }
+
+    public function deleteGroup($group_id){
+        DB::table('emi_collection')->where('group_id', $group_id)->delete();
+        DB::table('groups')->where('id', $group_id)->delete();
+        DB::table('group_customers')->where('group_id', $group_id)->delete();
+        DB::table('group_emi_dates')->where('group_id', $group_id)->delete();
+
+        return "done";
+    }
   
 
 }
