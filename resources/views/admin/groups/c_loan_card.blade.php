@@ -15,7 +15,7 @@
         <div class="col-md-6 text-right">
             <!-- <a href="javascript:;" class="btn btn-warning" ng-click="printCard()">Print</a> -->
             <a href="{{url('admin/groups/print-loan-card/'.$group_id.'/'.$customer_id)}}" class="btn btn-warning" >Print</a>
-            <a href="{{url('admin/groups')}}" class="btn btn-primary">Back</a>
+            <a href="{{url('admin/groups/view'.$group_id)}}" class="btn btn-primary">Back</a>
         </div>
     </div>    
     <div class="card shadow mb-4 p-4">

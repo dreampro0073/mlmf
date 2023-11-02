@@ -111,9 +111,11 @@ class UserController extends Controller {
     //     return;
     // }
 
-    public function testx(){
-        $start_date = "02-01-2024";
-    }
+    // public function testx(){
+    //     $test = DB::table('customers')->find(1);
+
+    //     dd($test);
+    // }
 
 	public function login(){
         

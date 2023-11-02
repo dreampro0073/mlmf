@@ -371,7 +371,7 @@ class ClientsController extends Controller {
 	public function deleteClient($client_id){
 		$check = DB::table('group_customers')->where('customer_id', $client_id)->where('status', 1)->count();
 		if($check > 0){
-			return Redirect::back()->with('success', "You can noot delete this customer, Because this customer active in a group !");
+			return Redirect::back()->with('success', "You can not delete this customer, Because this customer active in a group !");
 		} else {
 			DB::table('customers')->where('enc_id', $client_id)->update([
 				'status' => 0,

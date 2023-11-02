@@ -23,7 +23,7 @@ use App\Http\Controllers\GroupsOldController;
 
 
 Route::get('/', [UserController::class,'login'])->name("login");
-Route::get('/test', [UserController::class,'test']);
+Route::get('/test', [UserController::class,'testx']);
 Route::get('/emiCalculator', [PlanController::class,'emiCalculator']);
 Route::post('/login', [UserController::class,'postLogin']);
 
