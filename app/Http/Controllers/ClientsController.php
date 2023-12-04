@@ -19,6 +19,21 @@ class ClientsController extends Controller {
 
 		$clients = DB::table("customers")->select('customers.*')->where('status', 1)->get();
 
+		foreach ($clients as $item) {
+			if($item->processing_status == 1){
+				$item->kyc_status = 'Verified';
+			}
+			if($item->processing_status == 2){
+				$item->kyc_status = 'Processing';
+			}
+			if($item->processing_status == 3){
+				$item->kyc_status = 'Pending';
+			}
+			if($item->processing_status == 4){
+				$item->kyc_status = 'Failed';
+			}
+		}
+
 		return view('admin.clients.index', [
             "sidebar" => "clients",
             "subsidebar" => "clients",
@@ -178,8 +193,6 @@ class ClientsController extends Controller {
 
 			$cre['aadhaar_no'] = $request['aadhaar_no'];
 			$rules['aadhaar_no'] = 'required|unique:customers';
-
-
 		}
 
 		$validator = Validator::make($cre,$rules);
@@ -211,10 +224,12 @@ class ClientsController extends Controller {
 
 			if(isset($request['id'])){
 				$customer_id = $request['id'];
+				$data['processing_status'] = $request['processing_status'];
 				DB::table('customers')->where('id', $request['id'])->update($data);
 				$message = "Updated Successfully!";
 			} else {
 				$data['created_at'] = date('Y-m-d H:i:s');
+				$data['processing_status'] = 2;
 				$customer_id = DB::table('customers')->insertGetId($data);
 
 				DB::table('customers')->where('id',$customer_id)->update([
@@ -222,7 +237,6 @@ class ClientsController extends Controller {
             	]);
 
 				$message = "Stored Successfully!";
-
 
             	$customer = DB::table('customers')->where('id',$customer_id)->first();
 

@@ -25,9 +25,9 @@
                             <th>Sn</th>
                             <th>Name</th>
                             <th>Father / Husband Name</th>
-                            <th>Email</th>
                             <th>Mobile</th>
                             <th>Aadhaar</th>
+                            <th>Status</th>
                             <th>Address</th>
                             <th>#</th>
                         </tr>
@@ -39,9 +39,9 @@
                             <td>{{ $index++}}</td>
                             <td>{{ $item->name}}</td>
                             <td>{{ $item->father_husband_name}}</td>
-                            <td>{{ $item->email}}</td>
                             <td>{{ $item->mobile}}</td>
                             <td>{{ $item->aadhaar_no}}</td>
+                            <td>{{ $item->kyc_status}}</td>
                             <td>{{ $item->address}}</td>
                             <td>
                                 <a href="{{url('admin/clients/details/'.$item->enc_id)}}" class="btn btn-info btn-sm">View</a> 

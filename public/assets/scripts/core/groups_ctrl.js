@@ -322,6 +322,14 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService) {
         });
     }
 
+    $scope.collectInAdvanced = function(emi_collection_id){
+        if (confirm("Are You Sure ?") == true) {
+            DBService.postCall({ emi_collection_id : emi_collection_id},'/api/groups/advanced-collect').then((data) => {
+                $scope.viewCollection();
+            });
+        }
+    }
+
 });
 
 app.controller('loanCardCtrl', function($scope , $http, $timeout , DBService) {

@@ -53,7 +53,7 @@ class GroupsController extends Controller {
 
 
 	public function groupInit(Request $request){
-		$customers = DB::table('customers')->select('id','name')->get();
+		$customers = DB::table('customers')->where('status', 1)->where('processing_status', 1)->select('id','name')->get();
 		$group = DB::table('groups')->where('id', $request->group_id)->first();
 
 		if($group){
@@ -153,13 +153,17 @@ class GroupsController extends Controller {
 
 	public function printTodayCollectionInit(Request $request){
 
-
 		$group_dates = DB::table('group_emi_dates')->select('group_emi_dates.id as group_emi_date_id','group_emi_dates.group_id','group_emi_dates.emi_date','groups.group_name','villages.village_name','group_emi_dates.emi_amount')->leftjoin('groups','groups.id','=','group_emi_dates.group_id')->leftjoin('villages','villages.id','=','groups.village_id')->where('group_emi_dates.emi_date','=',date("Y-m-d"))->get();
 
 		$total_amount = 0;
 
 		foreach ($group_dates as $key => $group_date) {
-			$group_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','customers.mobile')->leftjoin('customers','customers.id','=','group_customers.customer_id')->where('group_customers.group_id','=',$group_date->group_id)->get();
+			$group_customers = DB::table('group_customers')->select('customers.name','customers.father_husband_name', 'customers.','customers.mobile', 'villages.village_name', 'customer_guarantor.mobile as guarantor_mobile')
+			->leftjoin('customers','customers.id','=','group_customers.customer_id')
+			->leftjoin('customer_guarantor','customers.id','=','customer_guarantor.customer_id')
+			->leftjoin('villages','villages.id','=','customer.village_id')
+			->where('group_customers.group_id','=',$group_date->group_id)
+			->get();
 
 			$group_date->group_customers = $group_customers;
 
@@ -911,6 +915,18 @@ class GroupsController extends Controller {
 
 		DB::table('emi_collection')->where('group_id', $group->group_id)->where('customer_id', $group->customer_id)->update(['collected_amount'=>1]);
 		return Redirect::to('admin/clients/history/'.$enc_id);
+	}
+
+	public function advancedCollect(Request $request){
+		DB::table("emi_collection")->where('id', $request->emi_collection_id)->update([
+			'remark'=>'Advanced Collected',
+			'collected_amount'=>1,
+		]);
+
+		$data['success'] = true;
+		$data['message'] = 'Successfully Updated!';
+
+ 		return Response::json($data,200,[]);
 	}
 }
 

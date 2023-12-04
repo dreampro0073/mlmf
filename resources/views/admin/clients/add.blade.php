@@ -25,6 +25,17 @@
                     <u>Clients Details</u>
                 </h1>
                 <div class="row">
+                    <div class="col-md-12 form-group" ng-if="client_id > 0">
+                        <label>Processing Status</label>
+                        <select ng-model="formData.processing_status" class="form-control" >
+                            <option value="">--Select--</option>
+                            <option ng-value=2>Processing</option>
+                            <option ng-value=3>Pending</option>
+                            <option ng-value=1>Verified</option>
+                            <option ng-value=4>Failed</option>
+                        </select>
+                    </div>
+
                     <div class="col-md-4 form-group">
                         <label>Client name</label>
                         <input type="text" ng-model="formData.name" class="form-control" required />
@@ -45,6 +56,7 @@
                         <label>Mobile</label>
                         <input type="number" maxlength="10" minlength="10"  ng-model="formData.mobile" class="form-control" required />
                     </div>
+
                     <div class="col-md-4 form-group">
                         <label>Bank Name</label>
                         <select ng-model="formData.bank_id" class="form-control" >
@@ -77,7 +89,6 @@
                     <!-- <div class="form-group col-4">
                         <label>State</label>
                         <selectize placeholder='Select State' ng-change="fetchDistricts()" config="selectConfig" options="states" ng-model="formData.state_id" required></selectize>
-
 
                     </div> -->
                     <div class="col-md-4 form-group">

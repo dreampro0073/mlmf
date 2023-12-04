@@ -175,13 +175,15 @@
                 <th style="width: 50px;">No.</th>
                 <th>Date</th>
                 <!-- <th style="width:150px;">Principal Amount Begining At the month</th> -->
-                <th>Principal Repayment</th>
+                <th style="width:80px;">Principal Repayment</th>
                 <th>Interest</th>
-                <th>Principal Payment</th>   
+                <th style="width:80px;">Principal Payment</th>   
 
                 <th>EMI</th>
                 <th>Signature</th>   
                 <th>LIR No.</th>   
+                <th>Remarks</th>   
+                <th>Penalty</th>   
             </tr>
         </thead>
         <tbody>
@@ -198,6 +200,8 @@
                     <td>{{$item->emi_amount}}</td>
 
                     <td></td>   
+                    <td></td> 
+                    <td></td> 
                     <td></td> 
                 </tr>
             @endforeach

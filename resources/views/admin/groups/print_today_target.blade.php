@@ -74,7 +74,7 @@
                 <th>Sn</th>
                 <th>Customer</th>
                 <th>Mobile</th>
-                <th>Aadhar</th>
+                <th>Village</th>
                 <th>EMI Amount</th>
             </tr>
         </thead>
@@ -89,13 +89,13 @@
                             {{ $key+1 }}
                         </td>
                         <td>
-                            {{$customer->name}}
+                            {{$customer->name}} / {{$customer->father_husband_name}}
                         </td>
                          <td>
-                            {{$customer->mobile}}
+                            {{$customer->mobile}} / {{$customer->guarantor_mobile}}
                         </td>
                         <td>
-                            {{$customer->aadhaar_no}}
+                            {{$customer->village_name}}
                         </td>
                         
                         <td>

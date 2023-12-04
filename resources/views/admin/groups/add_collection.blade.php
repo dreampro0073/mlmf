@@ -50,7 +50,8 @@
                     <span class="btn btn-danger" ng-click="payOldEMI(customer.emi_collection_id)" ng-if="!customer.emi_collected && !customer.future_emi && !customer.is_enabled">Not Paid</span>
 
                     <span ng-if="customer.emi_collected">Paid</span>
-                    <span ng-if="!customer.emi_collected && customer.future_emi">Future EMI</span>
+                    <button ng-if="!customer.emi_collected && customer.future_emi" ng-click="collectInAdvanced(customer.emi_collection_id)" class="btn btn-primary">Collect</button>
+                    
                 </td>
             </tr>
         </tbody>
