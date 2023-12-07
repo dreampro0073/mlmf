@@ -125,6 +125,10 @@ Route::group(['prefix'=>"api"], function(){
 		Route::post('/store-penalty',[GroupsController::class,'storePenalty']);
 		Route::post('/advanced-collect',[GroupsController::class,'advancedCollect']);
 	});
+	
+	Route::post('/emi-part',[GroupsController::class,'EMIPart']);
+	Route::post('/old-collect',[GroupsController::class,'oldCollect']);
+
 });
 
 Route::group(['prefix'=>"old-groups"], function(){

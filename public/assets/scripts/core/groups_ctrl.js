@@ -23,6 +23,7 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService) {
             onInitialize: function(selectize){
         }
     }
+    $scope.partData = {};
     $scope.emi_type = 0;
 
     $scope.editNotPaid = (emi_collection_id) => {
@@ -310,7 +311,7 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService) {
                 alert(data.message);
             }
         });
-    }
+    }    
 
     $scope.onSubmitPenalty = function(){
         DBService.postCall($scope.formData,'/api/groups/store-penalty').then((data) => {
@@ -329,6 +330,41 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService) {
             });
         }
     }
+
+
+    $scope.payPartEMI = function(emi_collection_id){
+        $scope.emi_collection_id = emi_collection_id;
+        DBService.postCall({ emi_collection_id : $scope.emi_collection_id},'/api/groups/get-penalty').then((data) => {
+            if(data.success){
+                $scope.partData = data.penalty_emi;
+                console.log($scope.partData);
+                $("#payPartEMI-modal").modal("show");
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+
+    $scope.onSubmitPart = function(){
+        console.log($scope.partData);
+        DBService.postCall($scope.partData,'/api/emi-part').then((data) => {
+            if(data.success){
+                alert(data.message);
+                $("#payPartEMI-modal").modal("hide");
+                $scope.viewCollection();
+            }
+        });
+    }
+
+    $scope.collectOldBalance = function(customer_id){
+        if (confirm("Are You Sure ?") == true) {
+            DBService.postCall({ customer_id : customer_id},'/api/old-collect').then((data) => {
+                alert(data.message);
+                $scope.viewCollection();
+            });
+        }
+    }
+
 
 });
 

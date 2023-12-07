@@ -132,11 +132,9 @@ class GroupsController extends Controller {
 
 		$group_dates = DB::table('group_emi_dates')->select('group_emi_dates.id as group_emi_date_id','group_emi_dates.group_id','group_emi_dates.emi_date','groups.group_name','villages.village_name','group_emi_dates.emi_amount')->leftjoin('groups','groups.id','=','group_emi_dates.group_id')->leftjoin('villages','villages.id','=','groups.village_id')->where('group_emi_dates.emi_date','=',date("Y-m-d"))->get();
 
-
-
 		$total_amount = 0;
 		foreach ($group_dates as $key => $group_date) {
-			$group_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','customers.mobile')->leftjoin('customers','customers.id','=','group_customers.customer_id')->where('group_customers.group_id','=',$group_date->group_id)->get();
+			$group_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','customers.mobile','customers.enc_id')->leftjoin('customers','customers.id','=','group_customers.customer_id')->where('group_customers.group_id','=',$group_date->group_id)->get();
 
 			$group_date->group_customers = $group_customers;
 
@@ -158,7 +156,7 @@ class GroupsController extends Controller {
 		$total_amount = 0;
 
 		foreach ($group_dates as $key => $group_date) {
-			$group_customers = DB::table('group_customers')->select('customers.name','customers.father_husband_name', 'customers.','customers.mobile', 'villages.village_name', 'customer_guarantor.mobile as guarantor_mobile')
+			$group_customers = DB::table('group_customers')->select('customers.name','customers.father_husband_name','customers.mobile', 'villages.village_name', 'customer_guarantor.mobile as guarantor_mobile')
 			->leftjoin('customers','customers.id','=','group_customers.customer_id')
 			->leftjoin('customer_guarantor','customers.id','=','customer_guarantor.customer_id')
 			->leftjoin('villages','villages.id','=','customer.village_id')
@@ -235,6 +233,8 @@ class GroupsController extends Controller {
 					$g_customer->is_checked = $is_checked;
 					$g_customer->emi_date = $group_date->emi_date;
 					$g_customer->emi_collection_id = $check_entry->id;
+					$g_customer->old_balance = 0;
+					$g_customer->old_balance = DB::table('emi_balence')->where('customer_id', $g_customer->customer_id)->where('collection_status',0)->sum('balance_amount');
 				}
 
 				$group_date->emi_date = date("d/m/Y",strtotime($group_date->emi_date));
@@ -925,6 +925,38 @@ class GroupsController extends Controller {
 
 		$data['success'] = true;
 		$data['message'] = 'Successfully Updated!';
+
+ 		return Response::json($data,200,[]);
+	}
+
+	public function EMIPart(Request $request){
+
+		DB::table('emi_collection')->where('id', $request->id)->update([
+			'collected_amount' => 1,
+			'remark' => $request->remark,
+		]);
+		DB::table('emi_balence')->insert([
+			'emi_collection_id' => $request->id,
+			'emi_amount' => $request->emi_amount,
+			'collected_amount' => $request->paid_amount,
+			'customer_id' => $request->customer_id,
+			'balance_amount' => $request->emi_amount - $request->paid_amount,
+			'collection_status' => 0,
+		]);
+
+		$data['success'] = true;
+		$data['message'] = "Collected !";
+
+ 		return Response::json($data,200,[]);
+	}
+
+	public function oldCollect(Request $request){
+		DB::table('emi_balence')->where('customer_id', $request->customer_id)->update([
+			'collection_status' => 1,
+		]);
+
+		$data['success'] = true;
+		$data['message'] = "Collected !";
 
  		return Response::json($data,200,[]);
 	}

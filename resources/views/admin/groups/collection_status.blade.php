@@ -1,4 +1,3 @@
-
 @extends('admin.layout')
 
 @section('header_scripts')
@@ -16,7 +15,6 @@
         </div>
         <div class="col-md-6 text-right">
             <a href="{{url('admin/groups/print-collection-view')}}" class="btn btn-sm btn-warning">Print Demand</a>
-            <a href="{{url('admin/groups/add-collection/'.$group_id)}}" class="btn btn-sm btn-primary">Add Collection</a>
             <a href="{{url('admin/groups')}}" class="btn btn-sm btn-info">Back</a>
         </div>
     </div>    
@@ -33,14 +31,21 @@
         </thead>
         <tbody ng-repeat="group_date in group_dates">
             <tr>
-                <th colspan="5">@{{group_date.group_name}}</th>
+                <th colspan="4">
+                    Group : <a href="{{url('admin/groups/view/')}}/@{{group_date.group_id}}" target="_blank">
+                         @{{group_date.group_name}}
+                    </a>
+                </th>
+                <th class="pull-right">
+                    <a href="{{url('admin/groups/add-collection/')}}/@{{group_date.group_id}}" class="btn btn-sm btn-primary">Add Collection</a>
+                </th>
             </tr>
             <tr ng-repeat="customer in group_date.group_customers track by $index">
                 <td>
                     @{{ $index+1 }}
                 </td>
                 <td>
-                    <a href="{{url('admin/clients/details/')}}/@{{customer.id}}" target="_blank">
+                    <a href="{{url('admin/clients/details/')}}/@{{customer.enc_id}}" target="_blank">
                         @{{customer.name}}
                     </a>
                 </td>
