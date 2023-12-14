@@ -159,7 +159,7 @@ class GroupsController extends Controller {
 			$group_customers = DB::table('group_customers')->select('customers.name','customers.father_husband_name','customers.mobile', 'villages.village_name', 'customer_guarantor.mobile as guarantor_mobile')
 			->leftjoin('customers','customers.id','=','group_customers.customer_id')
 			->leftjoin('customer_guarantor','customers.id','=','customer_guarantor.customer_id')
-			->leftjoin('villages','villages.id','=','customer.village_id')
+			->leftjoin('villages','villages.id','=','customers.village_id')
 			->where('group_customers.group_id','=',$group_date->group_id)
 			->get();
 
