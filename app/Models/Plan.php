@@ -15,7 +15,7 @@ class Plan extends Authenticatable {
     protected $table = 'plans';
 
    
-    public function collection ($today_groups){
+    public static function collection ($today_groups){
         $today_target = 0;
         $total_collection = 0;
 

@@ -40,6 +40,21 @@
             <span>Groups</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{($sidebar =='expenses' && $subsidebar == 'expenses')?'active':''}}" href="{{url('admin/expenses')}}">
+            <i class="fa fa-money" aria-hidden="true"></i>
+
+            <span>Expenses</span>
+        </a>
+    </li>    
+
+    <li class="nav-item">
+        <a class="nav-link {{($sidebar =='incomes' && $subsidebar == 'incomes')?'active':''}}" href="{{url('admin/income')}}">
+            <i class="fa fa-money" aria-hidden="true"></i>
+
+            <span>Income</span>
+        </a>
+    </li>
    
     <li class="nav-item">
         <a class="nav-link" href="{{url('logout')}}">

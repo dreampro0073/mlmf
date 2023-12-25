@@ -60,7 +60,7 @@ class AdminController extends Controller {
 	public function dashboard(Request $request){
 
 		$groups = DB::table('groups')->where('status', 1)->count();
-        $clients = DB::table('customers')->where('status', 1)->count();
+        $clients = DB::table('customers')->where('processing_status', 1)->where('status', 1)->count();
         $plans = DB::table('plans')->where('status', 1)->count();
         $today_groups = DB::table('group_emi_dates')->where('emi_date', date('Y-m-d'))->get();
 

@@ -8,6 +8,8 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\GroupsOldController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\IncomeController;
 
 
 /*
@@ -71,10 +73,20 @@ Route::group(['middleware'=>'auth'],function(){
 			Route::get('/print-collection-view',[GroupsController::class,'printTodayCollectionInit']);
 			Route::get('/close-group/{id}/{enc_id}',[GroupsController::class,'closeGroup']);
 
-
-		
-
 		});
+
+		Route::group(["prefix"=>"expenses"],function(){
+			Route::get('/',[ExpenseController::class,'index']);
+			Route::get('/add',[ExpenseController::class,'editForm']);
+			Route::get('/edit/{expense_id}',[ExpenseController::class,'editForm']);
+		});		
+
+		Route::group(["prefix"=>"income"],function(){
+			Route::get('/',[IncomeController::class,'index']);
+			Route::get('/add',[IncomeController::class,'editForm']);
+			Route::get('/edit/{income_id}',[IncomeController::class,'editForm']);
+		});
+
 	});
 });
 
@@ -125,6 +137,21 @@ Route::group(['prefix'=>"api"], function(){
 		Route::post('/store-penalty',[GroupsController::class,'storePenalty']);
 		Route::post('/advanced-collect',[GroupsController::class,'advancedCollect']);
 	});
+
+	Route::group(["prefix"=>"expenses"],function(){
+		Route::post('/init',[ExpenseController::class,'init']);
+		Route::post('/edit',[ExpenseController::class,'edit']);
+		Route::post('/store',[ExpenseController::class,'store']);
+		Route::get('/delete/{expense_id}',[ExpenseController::class,'delete']);
+	});	
+
+	Route::group(["prefix"=>"income"],function(){
+		Route::post('/init',[IncomeController::class,'init']);
+		Route::post('/edit',[IncomeController::class,'edit']);
+		Route::post('/store',[IncomeController::class,'store']);
+		Route::get('/delete/{income_id}',[IncomeController::class,'delete']);
+	});
+
 	
 	Route::post('/emi-part',[GroupsController::class,'EMIPart']);
 	Route::post('/old-collect',[GroupsController::class,'oldCollect']);

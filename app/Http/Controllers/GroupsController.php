@@ -134,9 +134,23 @@ class GroupsController extends Controller {
 
 		$total_amount = 0;
 		foreach ($group_dates as $key => $group_date) {
-			$group_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','customers.mobile','customers.enc_id')->leftjoin('customers','customers.id','=','group_customers.customer_id')->where('group_customers.group_id','=',$group_date->group_id)->get();
+			$group_customers = DB::table('group_customers')
+			->select('customers.name','customers.aadhaar_no','customers.mobile','customers.enc_id','group_customers.customer_id')
+			->leftjoin('customers','customers.id','=','group_customers.customer_id')
+			->where('group_customers.group_id','=',$group_date->group_id)
+			->get();
 
-			$group_date->group_customers = $group_customers;
+			$final_group_customers = [];
+
+			foreach($group_customers as $group_customer){
+
+				$check = DB::table('emi_collection')->where('group_emi_date_id', $group_date->group_emi_date_id)->where('customer_id', $group_customer->customer_id)->where('collected_amount', null)->first();
+				if($check){
+					$final_group_customers[] = $group_customer;
+				}
+			}
+
+			$group_date->group_customers = $final_group_customers;
 
 			$total_amount = sizeof($group_customers)*$group_date->emi_amount;
 		}
@@ -156,14 +170,24 @@ class GroupsController extends Controller {
 		$total_amount = 0;
 
 		foreach ($group_dates as $key => $group_date) {
-			$group_customers = DB::table('group_customers')->select('customers.name','customers.father_husband_name','customers.mobile', 'villages.village_name', 'customer_guarantor.mobile as guarantor_mobile')
+			$group_customers = DB::table('group_customers')->select('customers.name','customers.father_husband_name','customers.mobile', 'villages.village_name', 'customer_guarantor.mobile as guarantor_mobile','group_customers.customer_id')
 			->leftjoin('customers','customers.id','=','group_customers.customer_id')
 			->leftjoin('customer_guarantor','customers.id','=','customer_guarantor.customer_id')
 			->leftjoin('villages','villages.id','=','customers.village_id')
 			->where('group_customers.group_id','=',$group_date->group_id)
 			->get();
 
-			$group_date->group_customers = $group_customers;
+			$final_group_customers = [];
+
+			foreach($group_customers as $group_customer){
+
+				$check = DB::table('emi_collection')->where('group_emi_date_id', $group_date->group_emi_date_id)->where('customer_id', $group_customer->customer_id)->where('collected_amount', null)->first();
+				if($check){
+					$final_group_customers[] = $group_customer;
+				}
+			}
+
+			$group_date->group_customers = $final_group_customers;
 
 			$total_amount += sizeof($group_customers)*$group_date->emi_amount;
 		}
