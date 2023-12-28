@@ -55,8 +55,6 @@
                                 
                                 @endif
 
-
-
                                 @if($item->active == 0)
                                     <button type="button" ng-disabled="active_loading" class="btn btn-sm btn-primary"  ng-click="actvateGroup({{$item->id}})">
                                         <span ng-if="!active_loading">Activate</span>

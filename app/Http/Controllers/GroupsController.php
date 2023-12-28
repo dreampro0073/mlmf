@@ -406,6 +406,9 @@ class GroupsController extends Controller {
 	       	if($plan->emi_type == 4){
 
 	       		$start_date = date("Y-m-d",strtotime($plan->start_date));
+	       		if($start_date < date('Y-m-d')){
+	       			$start_date = date("Y-m-d",strtotime("+1 month".$plan->start_date));
+	       		}
 	       		$fixed_day = date("d",strtotime($start_date));
 	        	$second_date = date("Y-m-d",strtotime("+15 days".$start_date));
 
