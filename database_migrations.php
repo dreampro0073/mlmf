@@ -108,9 +108,18 @@ ALTER TABLE `group_customers` ADD `closed` TINYINT NOT NULL DEFAULT '0' AFTER `s
 ALTER TABLE `customers` ADD `processing_status` TINYINT NOT NULL DEFAULT '1' AFTER `status`;
 ALTER TABLE `customers` CHANGE `processing_status` `processing_status` TINYINT(4) NOT NULL DEFAULT '2';
 
-CREATE TABLE `mlmf`.`emi_balence` ( `id` INT NOT NULL , `emi_collection_id` INT NOT NULL DEFAULT '0' , `emi_amount` VARCHAR(255) NULL DEFAULT NULL , `collected_amount` VARCHAR(255) NULL DEFAULT NULL , `balance_amount` VARCHAR(255) NULL DEFAULT NULL , `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `created_at` TIMESTAMP NULL DEFAULT NULL ) ENGINE = InnoDB;
+CREATE TABLE `emi_balence` ( `id` INT NOT NULL , `emi_collection_id` INT NOT NULL DEFAULT '0' , `emi_amount` VARCHAR(255) NULL DEFAULT NULL , `collected_amount` VARCHAR(255) NULL DEFAULT NULL , `balance_amount` VARCHAR(255) NULL DEFAULT NULL , `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `created_at` TIMESTAMP NULL DEFAULT NULL ) ENGINE = InnoDB;
 ALTER TABLE `emi_balence` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`id`);
 ALTER TABLE `emi_balence` ADD `customer_id` INT NULL DEFAULT NULL AFTER `emi_collection_id`;
 ALTER TABLE `emi_balence` ADD `collection_status` TINYINT(2) NOT NULL DEFAULT '0' AFTER `balance_amount`;
+
+// 20 Feb 2024
+
+CREATE TABLE `banking` ( `id` INT NOT NULL , `added_by` INT NULL DEFAULT NULL , `amount` DOUBLE NULL DEFAULT NULL , `type` INT NULL DEFAULT NULL COMMENT '1=>Expense, 2=>Income' , `created_at` TIMESTAMP NULL DEFAULT NULL , `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ) ENGINE = InnoDB;
+ALTER TABLE `banking` ADD `transaction_type` TINYINT(2) NULL DEFAULT NULL COMMENT '1=>UPI, 2=>Cash' AFTER `type`;
+ALTER TABLE `banking` ADD `sent_received_by` VARCHAR(255) NULL DEFAULT NULL AFTER `transaction_type`;
+ALTER TABLE `banking` ADD `remarks` VARCHAR(255) NULL DEFAULT NULL AFTER `sent_received_by`;
+ALTER TABLE `banking` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`id`);
+
 
 ?>

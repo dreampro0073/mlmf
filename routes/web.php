@@ -10,6 +10,7 @@ use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\GroupsOldController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\BankingController;
 
 
 /*
@@ -87,6 +88,11 @@ Route::group(['middleware'=>'auth'],function(){
 			Route::get('/edit/{income_id}',[IncomeController::class,'editForm']);
 		});
 
+		Route::group(["prefix"=>"banking"],function(){
+			Route::get('/',[BankingController::class,'index']);
+			Route::get('/add',[BankingController::class,'addForm']);
+		});
+
 	});
 });
 
@@ -150,6 +156,11 @@ Route::group(['prefix'=>"api"], function(){
 		Route::post('/edit',[IncomeController::class,'edit']);
 		Route::post('/store',[IncomeController::class,'store']);
 		Route::get('/delete/{income_id}',[IncomeController::class,'delete']);
+	});
+
+	Route::group(["prefix"=>"banking"],function(){
+		Route::post('/init',[BankingController::class,'init']);
+		Route::post('/store',[BankingController::class,'store']);
 	});
 
 	

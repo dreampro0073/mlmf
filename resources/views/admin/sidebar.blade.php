@@ -55,12 +55,17 @@
             <span>Income</span>
         </a>
     </li>
+    
+    <li class="nav-item">
+        <a class="nav-link {{($sidebar =='banking' && $subsidebar == 'banking')?'active':''}}" href="{{url('admin/banking')}}">
+            <i class="fa fa-money" aria-hidden="true"></i>
+            <span>Banking</span>
+        </a>
+    </li>
    
     <li class="nav-item">
         <a class="nav-link" href="{{url('logout')}}">
-            
             <i class="fa fa-sign-out" aria-hidden="true"></i>
-
             <span>Logout</span>
         </a>
     </li>
