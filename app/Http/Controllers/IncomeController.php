@@ -86,7 +86,7 @@ class IncomeController extends Controller {
                             $data['message']='Added successfully';
                         }
                         $income->from =(isset($single_income['from']))?$single_income['from']:0;
-                        $income->date = (isset($single_income['date']))?date("Y-m-d",strtotime($single_income['date'])):null;
+                        $income->date = (isset($single_income['date']))?date("Y-m-d",strtotime($single_income['date'])): null;
                         
                         if (isset($single_income['date'])) { 
                             if (date("n",strtotime($single_income['date']))<=3) {

@@ -36,15 +36,19 @@ class BankingController extends Controller {
         }
 
         $banking = $banking->orderBy('banking.updated_at','ASC')->get();
+        foreach ($banking as $value) {
+            $value->date = date("d-m-Y", strtotime($value->updated_at));
+        }
         $cash_expense = DB::table("banking")->where("transaction_type", 2)->where("type", 1)->sum("amount");
         $upi_expense = DB::table("banking")->where("transaction_type", 1)->where("type", 1)->sum("amount");
         $cash_income = DB::table("banking")->where("transaction_type", 2)->where("type", 2)->sum("amount");
         $upi_income = DB::table("banking")->where("transaction_type", 1)->where("type", 2)->sum("amount");
         
         $income = $cash_income + $upi_income;
-        $expense = $cash_expense + $cash_income;
+        $expense = $cash_expense + $upi_expense;
         $upi_invest = DB::table("banking")->where("transaction_type", 1)->where("type", 3)->sum("amount");
         $cash_invest = DB::table("banking")->where("transaction_type", 2)->where("type", 3)->sum("amount");
+        
         $invest = $upi_invest + $cash_invest;
         $balance = $income - $expense - $invest;
         $data['success'] = true;
@@ -82,6 +86,13 @@ class BankingController extends Controller {
         ];
 
         $validator = Validator::make($cre,$rules);
+        if (isset($request->invoice)) {
+            if ($request->invoice !=null && $request->invoice) {
+                $invoice = $request->invoice;
+            }else{
+                $invoice =null;
+            }
+        }
 
         if($validator->passes()){
             $data['created_at'] = 
@@ -92,6 +103,7 @@ class BankingController extends Controller {
                 'transaction_type'=>$request->transaction_type,
                 'sent_received_by'=>$request->sent_received_by,
                 'remarks'=>$request->remarks,
+                'invoice'=>$invoice,
                 "created_at"=> date('Y-m-d H:i:s'),
             ]);
 

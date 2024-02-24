@@ -1,4 +1,4 @@
-app.controller('BankCtrl', function($scope , $http, $timeout , DBService) {
+app.controller('BankCtrl', function($scope , $http, $timeout , DBService, Upload) {
     $scope.searchData = {};
     $scope.formData = {};
     $scope.loading = false;
@@ -59,6 +59,41 @@ app.controller('BankCtrl', function($scope , $http, $timeout , DBService) {
 
         });
     }
+
+        $scope.uploadFile = function (file,name,obj) {
+        if(file){
+
+            obj.uploading = true;
+            var url = base_url+'/admin/uploadFile';
+            Upload.upload({
+                url: url,
+                data: {
+                    media: file
+                }
+            }).then(function (resp) {
+                if(resp.data.success){
+                    obj[name] = resp.data.media;
+
+                } else {
+                    alert(resp.data.message);
+                }
+                obj.uploading = false;
+                console.log(resp.data.media);
+
+            }, function (resp) {
+                
+                console.log('Error status: ' + resp.status);
+                obj.uploading = false;
+
+            }, function (evt) {
+                
+            });
+        }
+    }
+    $scope.removeFile = function(file_name){
+        $scope.formData[file_name] = '';
+    }
+    
 
     
 })

@@ -1,4 +1,4 @@
 vendor
 .env
 .htaccess
-.public/uploads
+public/uploads

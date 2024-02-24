@@ -23,25 +23,25 @@
                     <tr>
                         <td>Cash Expense</td>
                         <td>UPI Expense</td>
-                        <th>Expense</th>
                         <td>Cash Income</td>
                         <td>UPI Income</td>
-                        <th>Income</th>
                         <td>Cash Invest</td>
                         <td>UPI Invest</td>
+                        <th>Expense</th>
                         <th>Invest</th>
+                        <th>Income</th>
                         <th>Balance</th>
                     </tr>
                     <tr>
                         <th>@{{cash_expense}}</th>
                         <th>@{{upi_expense}}</th>
-                        <th>@{{expense}}</th>
                         <th>@{{cash_income}}</th>
                         <th>@{{upi_income}}</th>
-                        <th>@{{income}}</th>
                         <th>@{{cash_invest}}</th>
                         <th>@{{upi_invest}}</th>
+                        <th>@{{expense}}</th>
                         <th>@{{invest}}</th>
+                        <th>@{{income}}</th>
                         <th>
                             <span ng-if="balance > 0" style="color: green;">@{{balance}}</span>
                             <span ng-if="balance <= 0" style="color: red;">@{{balance}}</span>
@@ -90,13 +90,14 @@
                     <th>Type</th>
                     <th>Sent / Received By</th>
                     <th>Transaction Type</th>
+                    <th>Invoice</th>
                     <th>Remarks</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-if="banking.length>0" ng-repeat="item in banking">
                     <td>@{{$index+1}}</td>
-                    <td>@{{item.updated_at|date:'dd-MM-yyyy'}}</td>
+                    <td>@{{item.date}}</td>
                     <td>@{{item.amount}}</td>
                     <td>
                         <span ng-if="item.type == 1">Expense</span>
@@ -107,6 +108,11 @@
                     <td>
                         <span ng-if="item.transaction_type == 1">UPI</span>
                         <span ng-if="item.transaction_type == 2">Cash</span>
+                    </td>
+                    <td>
+                        <div ng-if="item.invoice != '' && item.invoice != null">
+                            <a href="{{url('/')}}/@{{item.invoice}}" target="_blank">View</a>
+                        </div>
                     </td>
                     <td style="font-size: 11px">@{{item.remarks}}</td>
                 </tr>
@@ -125,11 +131,11 @@
                     <div class="modal-body">
                         <form name="Transaction" novalidate="novalidate" ng-submit="storeTransaction(Transaction.$valid)">
                             <div class="row">
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-4 form-group">
                                     <label>Amount</label>
                                     <input type="text" ng-model="formData.amount" class="form-control" required />
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-4 form-group">
                                     <label>Type</label>
                                     <select ng-model="formData.type" class="form-control" required >
                                         <option value="">--Select--</option>
@@ -139,7 +145,7 @@
                                     </select>
                                 </div>
                                 
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-4 form-group">
                                     <label>Transaction type</label>
                                     <select ng-model="formData.transaction_type" class="form-control" required >
                                         <option value="">--Select--</option>
@@ -152,6 +158,18 @@
                                     <label>Sent / Received By</label>
                                     <input type="text" ng-model="formData.sent_received_by" class="form-control" required />
                                 </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Upload Invoice</label><br>
+                                        <button type="button" ng-show="formData.invoice == '' || formData.invoice == null " class="btn btn-sm btn-info" ngf-select="uploadFile($file,'invoice',formData)" data-style="expand-right" >Upload</button>
+                                            
+                                        <a class="btn btn-warning btn-sm ng-cloak" href="{{url('/')}}/@{{formData.invoice}}" ng-show="formData.invoice != '' && formData.invoice != null" target="_blank">View</a>
+
+                                        <a class="btn btn-danger btn-sm ng-cloak" ng-click="removeFile('invoice')" ng-show="formData.invoice != '' && formData.invoice != null ">x</a>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12 form-group">
                                     <label>Remarks</label>
                                     <textarea ng-model="formData.remarks" class="form-control"></textarea>
@@ -177,7 +195,7 @@
 @endsection
 
 @section('footer_scripts')
-    <?php $version = "0.0.3"; ?>
+    <?php $version = "0.0.4"; ?>
         
     <script type="text/javascript" src="{{url('assets/scripts/core/bank_ctrl.js?v='.$version)}}" ></script>
 
