@@ -121,6 +121,8 @@ ALTER TABLE `banking` ADD `sent_received_by` VARCHAR(255) NULL DEFAULT NULL AFTE
 ALTER TABLE `banking` ADD `remarks` VARCHAR(255) NULL DEFAULT NULL AFTER `sent_received_by`;
 ALTER TABLE `banking` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`id`);
 ALTER TABLE `banking` ADD `invoice` VARCHAR(255) NULL DEFAULT NULL AFTER `sent_received_by`;
+ALTER TABLE `group_customers` ADD `invoice` VARCHAR(255) NULL DEFAULT NULL AFTER `closed`;
+
 
 
 ?>

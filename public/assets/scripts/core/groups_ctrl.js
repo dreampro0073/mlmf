@@ -1,4 +1,4 @@
-app.controller('groupsCtrl', function($scope , $http, $timeout , DBService) {
+app.controller('groupsCtrl', function($scope , $http, $timeout , DBService, Upload) {
     $scope.loading = false;
     $scope.formData = {
         customers:[],
@@ -8,6 +8,7 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService) {
     $scope.customer_id = 0;
     $scope.emi_collection_id = 0;
 
+    $scope.customer = {};
     $scope.group_details = {};
     $scope.groups_details = [];
     $scope.group = {};
@@ -365,6 +366,50 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService) {
         }
     }
 
+    $scope.uploadFile = function (file,name,obj) {
+        $scope.customer = obj;
+        if(file){
+
+            obj.uploading = true;
+            var url = base_url+'/admin/uploadFile';
+            Upload.upload({
+                url: url,
+                data: {
+                    media: file
+                }
+            }).then(function (resp) {
+                if(resp.data.success){
+                    obj[name] = resp.data.media;
+                    $scope.customer.invoice = resp.data.media; 
+                    $scope.updateInvoice();
+                } else {
+                    alert(resp.data.message);
+                }
+                obj.uploading = false;
+                console.log(resp.data.media);
+
+            }, function (resp) {
+                
+                console.log('Error status: ' + resp.status);
+                obj.uploading = false;
+
+            }, function (evt) {
+                
+            });
+        }
+    }
+    $scope.removeFile = function(customer){
+        $scope.customer = customer;
+        $scope.customer.invoice = "";
+        $scope.updateInvoice();
+    }
+
+    $scope.updateInvoice = function(){
+        DBService.postCall($scope.customer, '/api/groups/update-invoice').then((data) => {
+             alert();
+        });
+    
+    }
 
 });
 

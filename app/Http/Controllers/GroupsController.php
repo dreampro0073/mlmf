@@ -90,7 +90,7 @@ class GroupsController extends Controller {
 		
 
 		if($group){
-			$group_customers = DB::table('group_customers')->select('customers.*','customers.name','group_customers.id as group_customer_id','group_customers.purpose')->leftjoin('customers','customers.id','=','group_customers.customer_id')->where('group_customers.group_id','=',$group->id)->get();
+			$group_customers = DB::table('group_customers')->select('customers.*','customers.name','group_customers.id as group_customer_id','group_customers.purpose','group_customers.invoice')->leftjoin('customers','customers.id','=','group_customers.customer_id')->where('group_customers.group_id','=',$group->id)->get();
 
 			$group->customers = $group_customers;
 
@@ -984,6 +984,16 @@ class GroupsController extends Controller {
 
 		$data['success'] = true;
 		$data['message'] = "Collected !";
+
+ 		return Response::json($data,200,[]);
+	}
+
+	public function updateInvoice(Request $request){
+		
+		DB::table("group_customers")->where('id', $request->group_customer_id)->update([
+			"invoice"=> $request->invoice ? $request->invoice : "",
+		]);
+		$data['success'] = true;
 
  		return Response::json($data,200,[]);
 	}

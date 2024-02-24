@@ -25,6 +25,7 @@
                 <th>Customer</th>
                 <th>Aadhar</th>
                 <th>Purpose</th>
+                <th>Invoice</th>
                 <th>#</th>
             </tr>
         </thead>
@@ -44,6 +45,14 @@
                 <td>
                     @{{customer.purpose}}
                 </td>
+                <td>
+                    <button type="button" ng-show="customer.invoice == '' || customer.invoice == null " class="btn btn-sm btn-info" ngf-select="uploadFile($file,'invoice',customer)" data-style="expand-right" >Upload</button>
+                        
+                    <a class="btn btn-warning btn-sm ng-cloak" href="{{url('/')}}/@{{customer.invoice}}" ng-show="customer.invoice != '' && customer.invoice != null" target="_blank">View</a>
+
+                    <a class="btn btn-danger btn-sm ng-cloak" ng-click="removeFile('customer')" ng-show="customer.invoice != '' && customer.invoice != null ">x</a>
+                </td>
+
                 <td>
                     <a ng-if="groups_details.active == 1" href="{{url('admin/groups/c-loan-card')}}/@{{group_id}}/@{{customer.id}}" class="btn btn-sm btn-success">Loan Card</a>
                     <a ng-if="groups_details.active == 1" href="{{url('admin/groups/shapat-patra')}}/@{{group_id}}/@{{customer.id}}" class="btn btn-sm btn-primary">
@@ -87,7 +96,7 @@
 @endsection
 
 @section('footer_scripts')
-    <?php $version = "0.0.1"; ?>
+    <?php $version = "0.0.3"; ?>
         
     <script type="text/javascript" src="{{url('assets/scripts/core/groups_ctrl.js?v='.$version)}}" ></script>
 

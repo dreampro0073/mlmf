@@ -60,7 +60,7 @@ app.controller('BankCtrl', function($scope , $http, $timeout , DBService, Upload
         });
     }
 
-        $scope.uploadFile = function (file,name,obj) {
+    $scope.uploadFile = function (file,name,obj) {
         if(file){
 
             obj.uploading = true;

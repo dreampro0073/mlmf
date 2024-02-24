@@ -142,6 +142,8 @@ Route::group(['prefix'=>"api"], function(){
 		Route::post('/get-penalty',[GroupsController::class,'getPenalty']);
 		Route::post('/store-penalty',[GroupsController::class,'storePenalty']);
 		Route::post('/advanced-collect',[GroupsController::class,'advancedCollect']);
+		
+		Route::post('/update-invoice',[GroupsController::class,'updateInvoice']);
 	});
 
 	Route::group(["prefix"=>"expenses"],function(){
