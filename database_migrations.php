@@ -123,6 +123,9 @@ ALTER TABLE `banking` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT, add PRIM
 ALTER TABLE `banking` ADD `invoice` VARCHAR(255) NULL DEFAULT NULL AFTER `sent_received_by`;
 ALTER TABLE `group_customers` ADD `invoice` VARCHAR(255) NULL DEFAULT NULL AFTER `closed`;
 
+// 09 Apr 2024
+
+ALTER TABLE `banking` ADD `date` DATE NULL DEFAULT NULL AFTER `sent_received_by`;
 
 
 ?>

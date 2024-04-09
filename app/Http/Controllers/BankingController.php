@@ -28,16 +28,19 @@ class BankingController extends Controller {
         if ($request->type) {
             $banking = $banking->where('banking.type',$request->type);
         }
+        
         if ($request->transaction_type) {
             $banking = $banking->where('banking.transaction_type',$request->transaction_type);
         }
+        
         if ($request->sent_received_by) {
             $banking = $banking->where('banking.sent_received_by','LIKE','%'.$request->sent_received_by.'%');
         }
 
-        $banking = $banking->orderBy('banking.updated_at','ASC')->get();
+        $banking = $banking->orderBy('banking.date','DESC')->get();
+        
         foreach ($banking as $value) {
-            $value->date = date("d-m-Y", strtotime($value->updated_at));
+            $value->date = $value->date ? date("d-m-Y", strtotime($value->date)) : null;
         }
         $cash_expense = DB::table("banking")->where("transaction_type", 2)->where("type", 1)->sum("amount");
         $upi_expense = DB::table("banking")->where("transaction_type", 1)->where("type", 1)->sum("amount");
@@ -101,6 +104,7 @@ class BankingController extends Controller {
                 'amount'=>$request->amount,
                 'added_by'=>Auth::id(),
                 'type'=>$request->type,
+                'date'=>date("Y-m-d", strtotime($request->date)),
                 'transaction_type'=>$request->transaction_type,
                 'sent_received_by'=>$request->sent_received_by,
                 'remarks'=>$request->remarks,

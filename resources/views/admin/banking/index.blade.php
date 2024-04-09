@@ -67,7 +67,6 @@
                         <option ng-value="2">Cash</option>
                     </select>
                 </div>
-
                 <div class="col-md-3 form-group">
                     <label>Sent / Received By</label>
                     <input type="text" class="form-control" ng-model="searchData.sent_received_by">
@@ -154,12 +153,16 @@
                                     </select>
                                 </div>
 
+                                <div class="col-md-3 form-group">
+                                    <label>Date</label>
+                                    <input type="text" ng-model="formData.date" class="form-control datepicker" required />
+                                </div>
                                 <div class="col-md-6 form-group">
                                     <label>Sent / Received By</label>
                                     <input type="text" ng-model="formData.sent_received_by" class="form-control" required />
                                 </div>
                                 
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Upload Invoice</label><br>
                                         <button type="button" ng-show="formData.invoice == '' || formData.invoice == null " class="btn btn-sm btn-info" ngf-select="uploadFile($file,'invoice',formData)" data-style="expand-right" >Upload</button>
