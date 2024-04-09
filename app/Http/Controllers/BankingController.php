@@ -86,11 +86,12 @@ class BankingController extends Controller {
         ];
 
         $validator = Validator::make($cre,$rules);
+        $invoice = null;
         if (isset($request->invoice)) {
             if ($request->invoice !=null && $request->invoice) {
                 $invoice = $request->invoice;
             }else{
-                $invoice =null;
+                $invoice = null;
             }
         }
 
