@@ -140,6 +140,7 @@ class GroupsController extends Controller {
 			->select('customers.name','customers.aadhaar_no','customers.mobile','customers.enc_id','group_customers.customer_id')
 			->leftjoin('customers','customers.id','=','group_customers.customer_id')
 			->where('group_customers.group_id','=',$group_date->group_id)
+			->where("group_customers.closed", 0)
 			->get();
 
 			$final_group_customers = [];
@@ -178,6 +179,7 @@ class GroupsController extends Controller {
 			->leftjoin('customer_guarantor','customers.id','=','customer_guarantor.customer_id')
 			->leftjoin('villages','villages.id','=','customers.village_id')
 			->where('group_customers.group_id','=',$group_date->group_id)
+			->where('group_customers.closed', 0)
 			->get();
 
 			$final_group_customers = [];
@@ -228,7 +230,7 @@ class GroupsController extends Controller {
 			$group_dates = DB::table('group_emi_dates')->where('group_id',$group->id)->get();
 
 			foreach ($group_dates as $group_date) {
-				$g_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','group_customers.customer_id')->leftjoin('customers','group_customers.customer_id','=','customers.id')->where('group_customers.group_id',$group->id)->get(); 
+				$g_customers = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','group_customers.customer_id')->leftjoin('customers','group_customers.customer_id','=','customers.id')->where('group_customers.group_id',$group->id)->where("group_customers.closed",0)->get(); 
 
 
 
