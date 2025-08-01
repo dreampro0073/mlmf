@@ -373,15 +373,16 @@ class GroupsController extends Controller {
 	}
 
 	public function actvateGroup(Request $request){
-		$client_id = Auth::user()->client_id();
-		dd($client_id);
+		$client_id = Auth::user()->client_id;
 		$group_id = $request->group_id;
 		$check_group = DB::table("groups")->where("client_id", $client_id)->where("id", $group_id)->first();
 		if(!$check_group){
 			die("Not Authorised!");
 		}
 
-		$plan = DB::table('groups')->select('plans.*','groups.start_date','groups.second_date')->leftjoin('plans','plans.id','=','groups.plan_id')->where("client_id", $client_id)->where('groups.id',$group_id)->first();
+		$plan = DB::table('groups')->select('plans.*','groups.start_date','groups.second_date')->leftjoin('plans','plans.id','=','groups.plan_id')->where("plans.client_id", $client_id)->where('groups.id',$group_id)->first();
+
+		// dd($plan);
 
 
 		if($plan){
@@ -552,7 +553,7 @@ class GroupsController extends Controller {
 
 		$group_dates = DB::table('group_emi_dates')->where('group_id',$group_id)->get();
 
-		$group_customers  = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','group_customers.customer_id')->leftjoin('customers','group_customers.customer_id','=','customers.id')->where("client_id", $client_id)->where('group_customers.group_id',$group_id)->get();
+		$group_customers  = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','group_customers.customer_id')->leftjoin('customers','group_customers.customer_id','=','customers.id')->where("group_customers.client_id", $client_id)->where('group_customers.group_id',$group_id)->get();
 
 		$group_dates = $group_dates;
 		// $group->group_customers = $group_customers;
