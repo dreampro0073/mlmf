@@ -374,6 +374,7 @@ class GroupsController extends Controller {
 
 	public function actvateGroup(Request $request){
 		$client_id = Auth::user()->client_id();
+		dd($client_id);
 		$group_id = $request->group_id;
 		$check_group = DB::table("groups")->where("client_id", $client_id)->where("id", $group_id)->first();
 		if(!$check_group){
