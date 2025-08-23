@@ -147,6 +147,10 @@ class UserController extends Controller {
 
 			
             if(Auth::attempt($cre)){
+
+                $user = DB::table('users')->leftJoin('client_id','client_id.id','=','users.client_id')->where('users.client_id',Auth::id())->first();
+
+                Session::put('user',$user);
                 
                 return Redirect::to('/admin/dashboard');
 

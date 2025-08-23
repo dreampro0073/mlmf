@@ -1,3 +1,4 @@
+<?php $version=env('JS_VERSION'); ?>
 @extends('admin.layout')
 
 @section('header_scripts')
@@ -60,8 +61,7 @@
 @endsection
 
 @section('footer_scripts')
-    <?php $version = "0.0.2"; ?>
-        
+    <?php $version = "0.0.2"; ?>        
     <script type="text/javascript" src="{{url('assets/scripts/core/plan_ctrl.js?v='.$version)}}" ></script>
 
     

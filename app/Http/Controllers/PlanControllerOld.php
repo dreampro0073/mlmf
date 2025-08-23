@@ -13,7 +13,7 @@ use Redirect, Validator, Hash, Response, Session, DB;
 
 use App\Models\Plan;
 
-class PlanController extends Controller {
+class PlanControllerOld extends Controller {
 
 	public function index(Request $request){
 
@@ -129,6 +129,11 @@ class PlanController extends Controller {
 				$emi_amount = round($cal['emi'], 2);
 				$no_of_emis = $cal['loan_tenure_months'];
 			}
+			// $total_amount = round($emi_amount * $no_of_emis, 2);
+			// $interest_amount = $total_amount - $request->principal_amount;
+
+
+
 
 			$data= [
 				'principal_amount'=>$request->principal_amount,
@@ -137,14 +142,29 @@ class PlanController extends Controller {
 				'time_line'=>$request->time_line,
 				'emi_type'=>$request->emi_type,
 				'no_of_emis'=>$no_of_emis,
+				// 'emi_amount'=>$emi_amount,
+				// 'total_amount'=>$total_amount,
+				// 'interest_amount'=>$interest_amount,
 			];
+
+			// 23th aug
+			// $principal = $request->principal_amount;
+			// $annual_interest_rate = $request->interest_rate;
+			// $loan_tenure_months = $no_of_emis;
+
+			// $monthly_interest_rate = ($annual_interest_rate / 12) / 100;
+			// $emi_numerator = $principal * $monthly_interest_rate * pow((1 + $monthly_interest_rate), $loan_tenure_months);
+			// $emi_denominator = pow((1 + $monthly_interest_rate), $loan_tenure_months) - 1;
+			// $emi = $emi_numerator / $emi_denominator;
+
+			// 23th aug
 
 			$principal = $request->principal_amount;
 			$annual_interest_rate = $request->interest_rate;
 			$loan_tenure_months = $no_of_emis;
 
 			if ($annual_interest_rate == 0) {
-			    
+			    // No interest → equal monthly installment
 			    $emi = $principal / $loan_tenure_months;
 			} else {
 			    $monthly_interest_rate = ($annual_interest_rate / 12) / 100;
@@ -153,7 +173,10 @@ class PlanController extends Controller {
 			    $emi = $emi_numerator / $emi_denominator;
 			}
 
+
 			$data['emi_amount'] = $emi;
+
+
 
 			if($request->id){
 				DB::table('plans')->where("client_id", Auth::user()->client_id)->where('id', $request->id)->update($data);
@@ -185,10 +208,29 @@ class PlanController extends Controller {
 	}
 
 	public function emiCalculator($request){
+		// $principal = $request->principal_amount;  
+		// $annual_interest_rate = $request->interest_rate;  
+		// $loan_tenure_months = $request->time_line / 28;
+		// $monthly_interest_rate = ($annual_interest_rate / 12) / 100;
+		// $emi_numerator = $principal * $monthly_interest_rate * pow((1 + $monthly_interest_rate), $loan_tenure_months);
+		// $emi_denominator = pow((1 + $monthly_interest_rate), $loan_tenure_months) - 1;
+		// $emi = $emi_numerator / $emi_denominator;
+		// $emi = $emi;
+		23th Aug
+		// $principal = $request->principal_amount;
+		// $annual_interest_rate = $request->interest_rate;
+		// $loan_tenure_months = $request->time_line / 30;
+		// $monthly_interest_rate = ($annual_interest_rate / 12) / 100;
+		// $emi_numerator = $principal * $monthly_interest_rate * pow((1 + $monthly_interest_rate), $loan_tenure_months);
+		// $emi_denominator = pow((1 + $monthly_interest_rate), $loan_tenure_months) - 1;
+		// $emi = $emi_numerator / $emi_denominator;
+
 		$principal = $request->principal_amount;
 		$annual_interest_rate = $request->interest_rate;
 		$loan_tenure_months = $request->time_line / 30;
+
 		if ($annual_interest_rate == 0) {
+		    // No interest → simple equal monthly installments
 		    $emi = $principal / $loan_tenure_months;
 		} else {
 		    $monthly_interest_rate = ($annual_interest_rate / 12) / 100;

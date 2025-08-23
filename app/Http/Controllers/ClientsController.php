@@ -359,9 +359,15 @@ class ClientsController extends Controller {
 
 		return Response::json($data, 200, []);
 	}
-	
+	public function getStates(Request $request){
+		$states = DB::table('states')->select('id', 'state_name')->where('active',1)->get();
+		$data['states'] = $states;
+		$data['success'] = true;
+
+		return Response::json($data, 200, []);
+	}
 	public function getDistricts(Request $request){
-		$districts = DB::table('cities')->where('state_id', $request->state_id)->where('active', 1)->get();
+		$districts = DB::table('cities')->where('state_id', $request->state_id)->where('active', 0)->get();
 		$data['districts'] = $districts;
 		$data['success'] = true;
 

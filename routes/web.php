@@ -11,6 +11,8 @@ use App\Http\Controllers\GroupsOldController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\BankingController;
+use App\Http\Controllers\BlockController;
+use App\Http\Controllers\VillageController;
 
 
 /*
@@ -76,6 +78,17 @@ Route::group(['middleware'=>'auth'],function(){
 
 		});
 
+		Route::group(['prefix'=>"blocks"], function(){
+			Route::get('/',[BlockController::class,'blocks']);
+			Route::get('/add/{block_id?}',[BlockController::class,'addBlock']);
+			
+		});
+		Route::group(['prefix'=>"villages"], function(){
+			Route::get('/',[VillageController::class,'index']);
+			Route::get('/add/{village_id?}',[VillageController::class,'add']);
+			
+		});
+
 		Route::group(["prefix"=>"expenses"],function(){
 			Route::get('/',[ExpenseController::class,'index']);
 			Route::get('/add',[ExpenseController::class,'editForm']);
@@ -99,6 +112,7 @@ Route::group(['middleware'=>'auth'],function(){
 
 
 Route::group(['prefix'=>"api"], function(){
+	Route::post('/states',[ClientsController::class,'getStates']);
 	Route::post('/districts',[ClientsController::class,'getDistricts']);
 	Route::post('/blocks',[ClientsController::class,'getBlocks']);
 	Route::post('/villages',[ClientsController::class,'geVtillages']);
@@ -168,6 +182,20 @@ Route::group(['prefix'=>"api"], function(){
 	
 	Route::post('/emi-part',[GroupsController::class,'EMIPart']);
 	Route::post('/old-collect',[GroupsController::class,'oldCollect']);
+
+	Route::group(['prefix'=>"blocks"], function(){
+		Route::post('/init',[BlockController::class,'blockInit']);
+		Route::post('/store',[BlockController::class,'storeBlock']);
+		
+		
+	});
+
+	Route::group(['prefix'=>"villages"], function(){
+		Route::post('/init',[VillageController::class,'init']);
+		Route::post('/store',[VillageController::class,'store']);
+		
+		
+	});
 
 });
 

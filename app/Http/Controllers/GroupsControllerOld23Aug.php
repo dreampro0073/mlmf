@@ -15,7 +15,7 @@ use App\Models\Customer,App\Models\Plan;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-class GroupsController extends Controller {
+class GroupsControllerOld23Aug extends Controller {
 
 	public function index(Request $request){
 		$groups = DB::table("groups")->select('groups.*','plans.plan_name','blocks.block_name','villages.village_name')->leftjoin('plans','plans.id','=','groups.plan_id')->leftjoin('blocks','blocks.id','=','groups.block_id')->leftjoin('villages','villages.id','=','groups.village_id')->where("groups.client_id", Auth::user()->client_id)->where('groups.status', 1)->orderBy('groups.id', 'DESC')->get();
@@ -517,45 +517,38 @@ class GroupsController extends Controller {
 			$principal = $plan->principal_amount;
 			$annual_interest_rate = $plan->interest_rate;
 			$loan_tenure_months = $plan->no_of_emis;
+			$monthly_interest_rate = ($annual_interest_rate / 12) / 100;
+			$emi_numerator = $principal * $monthly_interest_rate * pow((1 + $monthly_interest_rate), $loan_tenure_months);
+			$emi_denominator = pow((1 + $monthly_interest_rate), $loan_tenure_months) - 1;
+			$emi = $emi_numerator / $emi_denominator;
 			$outstanding_balance = $principal;
 
-			if ($annual_interest_rate == 0) {
-			    // No interest → simple equal division
-			    $emi = $principal / $loan_tenure_months;
-			    $monthly_interest_rate = 0;
-			} else {
-			    $monthly_interest_rate = ($annual_interest_rate / 12) / 100;
-			    $emi_numerator = $principal * $monthly_interest_rate * pow((1 + $monthly_interest_rate), $loan_tenure_months);
-			    $emi_denominator = pow((1 + $monthly_interest_rate), $loan_tenure_months) - 1;
-			    $emi = $emi_numerator / $emi_denominator;
-			}
-
 			foreach ($dates as $key => $date) {
-			    $monthly_interest_payment = $outstanding_balance * $monthly_interest_rate;
-			    $monthly_principal_payment = $emi - $monthly_interest_payment;
-			    $start_m_principal = $outstanding_balance;
-			    $outstanding_balance -= $monthly_principal_payment;
-			    $s_dt = [
-			        'group_id'           => $group_id,
-			        'emi_date'           => $date,
-			        'emi_amount'         => round($emi, 2),
-			        'interest_payment'   => round($monthly_interest_payment, 2),
-			        'principal_payment'  => round($monthly_principal_payment, 2),
-			        'principal_repayment'=> round($monthly_principal_payment, 2),
-			        'start_m_principal'  => round($start_m_principal, 2),
-			        'end_m_principal'    => round($outstanding_balance, 2), 
-			    ];
+				$monthly_interest_payment = $outstanding_balance * $monthly_interest_rate;
+				$monthly_principal_payment = $emi - $monthly_interest_payment;
 
-			    $date_check = DB::table('group_emi_dates')
-			        ->where('group_id', $group_id)
-			        ->where("emi_date", $date)
-			        ->first();
+				$start_m_principal = $outstanding_balance;
+				$outstanding_balance -= $monthly_principal_payment;
 
-			    if (!$date_check) {
-			        DB::table('group_emi_dates')->insert($s_dt);
-			    }
+				$principal_repayment = $emi - $monthly_interest_payment;
+
+
+				$s_dt = [
+					'group_id' => $group_id,
+					'emi_date' => $date,
+					'emi_amount' => round($emi),
+					'interest_payment' => round($monthly_interest_payment,1),
+					'principal_payment' => round($outstanding_balance),
+					'principal_repayment' => round($principal_repayment),
+					'start_m_principal' => round($start_m_principal),
+				];
+
+				$date_check = DB::table('group_emi_dates')->where('group_id',$group_id)->where("emi_date",$date)->first();
+
+				if(!$date_check){
+					DB::table('group_emi_dates')->insert($s_dt);	
+				}
 			}
-
 		}
 
 		$group_dates = DB::table('group_emi_dates')->where('group_id',$group_id)->get();
@@ -563,6 +556,8 @@ class GroupsController extends Controller {
 		$group_customers  = DB::table('group_customers')->select('customers.name','customers.aadhaar_no','group_customers.customer_id')->leftjoin('customers','group_customers.customer_id','=','customers.id')->where("group_customers.client_id", $client_id)->where('group_customers.group_id',$group_id)->get();
 
 		$group_dates = $group_dates;
+		// $group->group_customers = $group_customers;
+
 		$show_customers = [];
 
 		if(sizeof($group_customers) > 0){
