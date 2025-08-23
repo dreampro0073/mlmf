@@ -5,7 +5,7 @@
 @endsection
 
 @section('main')
-<div class="main" ng-controller="groupsCtrl" ng-init="group_id={{$group_id}};addGroupInit()">
+<div class="main" ng-controller="groupsCtrl" ng-init="group_id={{$group_id}};addGroupInit();getStates();">
     <div class="row mb-4">
         <div class="col-md-6">
             <h1 class="h3 mb-2 text-gray-800">
@@ -49,14 +49,25 @@
                             <?php } ?>
                         </select>
                     </div>
-
-                    <div class="col-md-4 form-group">
+                    <div class="form-group col-4" >
+                        <label>State</label>
+                        <selectize placeholder='Select State' ng-change="fetchDistricts()" config="selectConfigStates" options="states" ng-model="formData.state_id" required></selectize>
+                    </div> 
+                    <div class="form-group col-4" >
+                        <label>District</label>
+                        <selectize placeholder='Select District' ng-change="getBlocks()" config="selectConfigDistrict" options="districts" ng-model="formData.city_id" required></selectize>
+                    </div> 
+                    <div class="form-group col-4" >
+                        <label>Block</label>
+                        <selectize placeholder='Select Block' ng-change="getVillages()" config="selectConfigBlock" options="blocks" ng-model="formData.block_id" required></selectize>
+                    </div> 
+                    <!-- <div class="col-md-4 form-group">
                         <label>Block</label>
                         <select ng-model="formData.block_id" ng-change="getVillages()" class="form-control" required="" convert-to-number>
                             <option value="">--select--</option>
                             <option ng-repeat="item in blocks" value=@{{item.id}}>@{{ item.block_name}}</option>
                         </select>
-                    </div> 
+                    </div>  -->
 
                     <div class="form-group col-4" >
                         <label>Village</label>

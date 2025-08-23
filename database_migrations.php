@@ -156,4 +156,6 @@ UPDATE users set client_id = 1;
 INSERT INTO `seasons` (`year`, `Season`) VALUES ('2023', '2023-24'), ('2024', '2024-25'),('2025', '2025-20');
 
 ALTER TABLE `group_emi_dates` ADD `end_m_principal` VARCHAR(50) NULL DEFAULT NULL AFTER `principal_repayment`;
+
+ALTER TABLE `groups` ADD `state_id` INT NOT NULL DEFAULT '0' AFTER `second_date`, ADD `city_id` INT NOT NULL DEFAULT '0' AFTER `state_id`;
 ?>

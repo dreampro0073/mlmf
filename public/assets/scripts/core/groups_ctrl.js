@@ -26,6 +26,8 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService, Uplo
     }
     $scope.partData = {};
     $scope.emi_type = 0;
+    $scope.states = [];
+    $scope.districts = [];
 
     $scope.editNotPaid = (emi_collection_id) => {
         $scope.emi_collection_id = emi_collection_id;
@@ -87,13 +89,52 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService, Uplo
         }
     }
 
-   $scope.addGroupInit = function () {
-    $scope.loading = true;
+    $scope.selectConfigStates = {
+        valueField: 'id',
+        labelField: 'state_name',
+        maxItems:1,
+        searchField: 'state_name',
+        create: false,
+        onInitialize: function(selectize){
+            // console.log('Initialized', selectize);
+        }
+    }
+
+    $scope.selectConfigDistrict = {
+        valueField: 'id',
+        labelField: 'city_name',
+        maxItems:1,
+        searchField: 'city_name',
+        create: false,
+        onInitialize: function(selectize){
+            // console.log('Initialized', selectize);
+        }
+    }
+    $scope.selectConfigBlock = {
+        valueField: 'id',
+        labelField: 'block_name',
+        maxItems:1,
+        searchField: 'block_name',
+        create: false,
+        onInitialize: function(selectize){
+            // console.log('Initialized', selectize);
+        }
+    }
+    $scope.getStates = function(){
+        DBService.postCall($scope.formData, '/api/states').then((data) => {
+            if (data.success) {
+                $scope.states = data.states;
+            }
+        });
+    }
+    $scope.addGroupInit = function () {
+        $scope.loading = true;
         DBService.postCall({ group_id:$scope.group_id}, '/api/groups/init').then((data) => {
             if (data.success) {
                 if(data.group){
                     $scope.formData = data.group;
-                    $scope.getVillages();
+                    $scope.fetchDistricts();
+                    // $scope.getVillages();
                     $scope.changePlan();
                 }
                 $scope.blocks = data.blocks;
@@ -105,7 +146,38 @@ app.controller('groupsCtrl', function($scope , $http, $timeout , DBService, Uplo
             }
 
         });
-    $scope.loading = false;
+        $scope.loading = false;
+    }
+
+    $scope.fetchDistricts = function(){
+        // $scope.formData.city_id =0;
+        // $scope.formData.block_id = 0;
+        // $scope.formData.village_id = 0;
+        if(!$scope.formData.id){
+             $scope.formData.city_id = 0;
+        }
+        DBService.postCall($scope.formData, '/api/districts').then((data) => {
+            if (data.success) {
+                $scope.districts = data.districts;
+
+                if($scope.group_id > 0){
+
+                    $scope.getBlocks();
+                }
+            }
+        });
+    }
+    $scope.getBlocks = function(){
+        console.log($scope.formData.city_id+'ccc id');
+        DBService.postCall({district_id:$scope.formData.city_id}, '/api/blocks').then((data) => {
+            if (data.success) {
+                $scope.blocks = data.blocks;
+
+                if($scope.group_id > 0){
+                    $scope.getVillages();
+                }
+            }
+        });
     }
     
     $scope.viewGroupInit = function () {

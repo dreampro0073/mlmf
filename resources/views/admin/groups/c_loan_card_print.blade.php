@@ -77,7 +77,11 @@
         <div class="col-md-6">
             <div class="bio row vert">
                <div>
-                   <img src="{{url('assets/img/logo.png')}}" style="height:60px;width:auto;"> &nbsp;&nbsp;
+                    @if(Auth::id() == 1)
+                        <img src="{{url('assets/img/logo.png')}}" style="height:60px;width:auto;"> &nbsp;&nbsp;
+                    @else
+                        {{Auth::user()->name}}
+                    @endif
                
                </div>
                <div>

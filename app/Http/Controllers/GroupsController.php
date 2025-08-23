@@ -67,14 +67,11 @@ class GroupsController extends Controller {
 				$group->day = (date('d', strtotime($group->start_date)))*1;
 			} 
 		}
-
-		$blocks = DB::table('blocks')->get();
 		$plans = DB::table("plans")->select('id','plan_name')->where("client_id", $client_id)->where('status', 1)->get();
 
 		$data['success'] = true;
 		$data['group'] = $group;
 		$data['plans'] = $plans;
-		$data['blocks'] = $blocks;
 		$data['customers'] = $customers;
 
 
@@ -312,6 +309,8 @@ class GroupsController extends Controller {
 			$data= [
 				'group_name'=>$request->group_name,
 				'plan_id'=>$request->plan_id,
+				'state_id'=>$request->state_id,
+				'city_id'=>$request->city_id,
 				'block_id'=>$request->block_id,
 				'village_id'=>$request->village_id,
 				'pin_code'=>$request->pin_code,
@@ -518,9 +517,9 @@ class GroupsController extends Controller {
 			$annual_interest_rate = $plan->interest_rate;
 			$loan_tenure_months = $plan->no_of_emis;
 			$outstanding_balance = $principal;
-
+			$allocated = 0;
+			
 			if ($annual_interest_rate == 0) {
-			    // No interest → simple equal division
 			    $emi = $principal / $loan_tenure_months;
 			    $monthly_interest_rate = 0;
 			} else {
@@ -529,7 +528,6 @@ class GroupsController extends Controller {
 			    $emi_denominator = pow((1 + $monthly_interest_rate), $loan_tenure_months) - 1;
 			    $emi = $emi_numerator / $emi_denominator;
 			}
-
 			foreach ($dates as $key => $date) {
 			    $monthly_interest_payment = $outstanding_balance * $monthly_interest_rate;
 			    $monthly_principal_payment = $emi - $monthly_interest_payment;
@@ -545,17 +543,14 @@ class GroupsController extends Controller {
 			        'start_m_principal'  => round($start_m_principal, 2),
 			        'end_m_principal'    => round($outstanding_balance, 2), 
 			    ];
-
 			    $date_check = DB::table('group_emi_dates')
 			        ->where('group_id', $group_id)
 			        ->where("emi_date", $date)
 			        ->first();
-
 			    if (!$date_check) {
 			        DB::table('group_emi_dates')->insert($s_dt);
 			    }
 			}
-
 		}
 
 		$group_dates = DB::table('group_emi_dates')->where('group_id',$group_id)->get();

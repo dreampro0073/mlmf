@@ -63,7 +63,14 @@ class PlanController extends Controller {
 	public function planInit(Request $request){
 
 		$plan = DB::table('plans')->where('id', $request->plan_id)->where("client_id", Auth::user()->client_id)->first();
-		$emi_types = DB::table('emi_types')->where('for_user', 0)->select('id', 'type_name')->get();
+
+		if(Auth::id() == 1){
+			$emi_types = DB::table('emi_types')->where('for_user', 0)->select('id', 'type_name')->get();
+
+		}else{
+			$emi_types = DB::table('emi_types')->where('for_user', 0)->where('for_user', 0)->select('id', 'type_name')->where('id',5)->get();
+		}
+
 
 		$data['success'] = true;
 		$data['plan'] = $plan;

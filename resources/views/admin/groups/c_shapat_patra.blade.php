@@ -75,7 +75,11 @@
 <body>
     <div class="row personal-bio" style="height:150px;">
         <div class="col-md-6">
-            <img src="{{url('assets/img/logo.png')}}" style="height:60px;width:auto;"> &nbsp;&nbsp;
+            @if(Auth::id() == 1)
+                <img src="{{url('assets/img/logo.png')}}" style="height:60px;width:auto;"> &nbsp;&nbsp;
+            @else
+                {{Auth::user()->name}}
+            @endif
         </div>
         <div class="col-md-6">
             <div style="text-align: right;">

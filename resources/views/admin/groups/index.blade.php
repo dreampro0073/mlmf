@@ -14,7 +14,9 @@
         </div>
         <div class="col-md-6 text-right">
             <a href="{{url('admin/groups/add')}}" class="btn btn-primary">Add</a>
+            @if(Auth::id() == 1)
             <a href="{{url('old-groups/add')}}" class="btn btn-primary">Add Old Group</a>
+            @endif
         </div>
     </div>    
     <div class="card shadow mb-4"> 

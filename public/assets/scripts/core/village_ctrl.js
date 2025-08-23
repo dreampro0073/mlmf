@@ -26,10 +26,6 @@ app.controller('villageCtrl', function($scope , $http, $timeout , DBService, Upl
         DBService.postCall($scope.formData, '/api/districts').then((data) => {
             if (data.success) {
                 $scope.districts = data.districts;
-
-                if(data.districts){
-                    $scope.getBlocks();
-                }
             }
         });
     }
