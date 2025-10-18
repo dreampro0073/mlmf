@@ -124,7 +124,7 @@
 @endsection
 
 @section('footer_scripts')
-    <?php $version = "0.0.2"; ?>
+    <?php $version=env('JS_VERSION'); ?>
         
     <script type="text/javascript" src="{{url('assets/scripts/core/plan_ctrl.js?v='.$version)}}" ></script>
 

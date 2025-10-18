@@ -1,3 +1,4 @@
+<?php $version=env('JS_VERSION'); ?>
 @extends('admin.layout')
 
 @section('header_scripts')

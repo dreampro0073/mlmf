@@ -4,6 +4,7 @@
 
 <div class="main">
     <h1 class="h3 mb-2 text-gray-800">Dashboard</h1>	
+    @if(Auth::user()->client_id != 3)
    	<div class="row">
         <div class="col-md-3">
             <a class="no-dec" href="{{url('/admin/groups/today/collection')}}">
@@ -103,13 +104,14 @@
             </table>
         </div>
     </div>
+    @endif
 
 </div>
 @endsection
 
 
 @section('footer_scripts')
-    <?php $version = "0.0.3"; ?>
+    <?php $version=env('JS_VERSION'); ?>
         
     <script type="text/javascript" src="{{url('assets/scripts/core/client_ctrl.js?v='.$version)}}" ></script>
 

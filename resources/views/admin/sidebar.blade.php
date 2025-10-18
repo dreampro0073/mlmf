@@ -1,5 +1,5 @@
 <?php
-    $clients_ids = [1];
+    $clients_ids = [1,3];
     $user = Session::get('user');
 ?>
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -19,7 +19,7 @@
             <span>Dashboard</span>
         </a>
     </li>
-    
+    @if(Auth::user()->client_id != 3)
     <li class="nav-item">
         <a class="nav-link {{($sidebar =='clients' && $subsidebar == 'clients')?'active':''}}" href="{{url('admin/clients')}}">
             <i class="fa fa-users" aria-hidden="true"></i>
@@ -41,6 +41,7 @@
             <span>Groups</span>
         </a>
     </li>
+    @endif
     @if(Auth::user()->privilege == 1)
     <li class="nav-item">
         <a class="nav-link {{($sidebar =='blocks' && $subsidebar == 'blocks')?'active':''}}" href="{{url('admin/blocks')}}">
